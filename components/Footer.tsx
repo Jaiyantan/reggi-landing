@@ -236,7 +236,7 @@ export default function Footer() {
                              bg-white rounded-[8px] px-[10px] py-[5px]"
                 >
                   <img
-                    src="https://www.reggi.in/wp-content/uploads/2025/02/668504c8e4-REGGI-LOGO-NEW-for-trademark-2.jpg"
+                    src="/images/reggi-logo.jpg"
                     alt="REGGI – Jujube Superfood Dips"
                     width={120}
                     height={36}

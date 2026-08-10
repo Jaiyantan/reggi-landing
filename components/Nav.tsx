@@ -29,7 +29,7 @@ export default function Nav() {
     <nav className="sticky top-0 z-[100] flex items-center justify-between bg-cream border-b border-creamDark px-[20px] py-[6px] md:px-[40px] md:py-[8px] shadow-nav">
       <a href="#" className="flex items-center gap-[10px] no-underline">
         <img
-          src="https://www.reggi.in/wp-content/uploads/2025/02/668504c8e4-REGGI-LOGO-NEW-for-trademark-2.jpg"
+          src="/images/reggi-logo.jpg"
           alt="REGGI Logo"
           className="h-[36px] object-contain"
         />

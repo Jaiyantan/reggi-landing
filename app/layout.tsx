@@ -18,6 +18,15 @@ export const metadata: Metadata = {
   title: "REGGI – Jujube Superfood Dips",
   description:
     "Hand-crafted from sun-dried Jujube fruit blended with organic spice extracts. 100% Vegan, Gluten Free, FSSAI Certified.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+    other: [
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+  },
 };
 
 export default function RootLayout({

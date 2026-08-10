@@ -9,7 +9,7 @@ export default function ProtectedAdminLayout({ children }: { children: React.Rea
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
             <img
-              src="https://www.reggi.in/wp-content/uploads/2025/02/668504c8e4-REGGI-LOGO-NEW-for-trademark-2.jpg"
+              src="/images/reggi-logo.jpg"
               alt="REGGI Logo"
               className="h-[24px] object-contain"
             />
