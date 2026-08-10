@@ -41,6 +41,7 @@ async function run() {
   for (const size of icoSizes) {
     const data = await img.clone()
       .resize(size, size, { fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } })
+      .ensureAlpha()
       .png()
       .toBuffer();
     pngBuffers.push({ width: size, height: size, data });
