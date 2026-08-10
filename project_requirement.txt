@@ -1,0 +1,33 @@
+A professional , minimalistic, stylish landing page, which describes and commands the brand language of reggi.
+
+Functional features (business logic) :-
+
+ 1. Hero section with the same as in reggi.in
+ 2. Short description about the brand below the Hero section
+ 3. Product display of all the products
+ 4. A "buy-now" button on each product card which should add the product to the cart
+ 5. After the user adds all the products that he wants to buy, the user should be able to view the cart and then proceed to checkout
+ 6. The user should be able to view the products that he has added to the cart
+ 7. The user should be able to remove the products that he has added to the cart
+ 8. There should be a Buy-Now button on the cart page which should take the user to the checkout page
+ 9. The checkout page should have the following fields :- 
+    - Name
+    - Email
+    - Phone Number
+    - Address
+10. Once checked out , the user should be given an QR code for the exact amount for UPI payment, and the UPI id of the reciptient should also be displayed.
+11. Once the user pays the amount, the transaction should be verified and once the transaction is verified, the user should be notified about the payment confirmation.
+12. The owner (reciptient) should recieve the order copy in whatsapp with the following details :- 
+    - Name
+    - Email
+    - Phone Number
+    - Address
+    - List of products
+    - Total amount  
+13. The user should also recieve confirmation that thier order is confirmed via whatsapp with the bill..
+
+
+
+Color theme :- White (ivorish white0), greenish texture
+
+
