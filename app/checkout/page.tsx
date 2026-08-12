@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useCartStore, parsePrice } from '@/store/cartStore';
 import { INDIAN_STATES_AND_UTS } from '@/data/indianStates';
 import Link from 'next/link';
-
+import Script from 'next/script';
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, getTotalPrice, products } = useCartStore();
@@ -208,43 +208,67 @@ export default function CheckoutPage() {
           throw new Error(data.error || 'Failed to submit order. Please try again.');
         }
 
-        setOrderId(data.orderId);
-        setIsSubmitted(true);
+        const rpResponse = await fetch('/api/razorpay/create-order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ orderId: data.orderId }),
+        });
+
+        const rpData = await rpResponse.json();
+
+        if (!rpResponse.ok) {
+          throw new Error(rpData.error || 'Failed to initialize payment.');
+        }
+
+        const options = {
+          key: rpData.keyId,
+          amount: rpData.amount,
+          currency: rpData.currency,
+          name: 'REGGI',
+          description: 'Order Payment',
+          order_id: rpData.razorpayOrderId,
+          prefill: {
+            name: formData.name,
+            email: formData.email,
+            contact: formData.phone,
+          },
+          theme: {
+            color: '#1A331E', // This is your greenDark token
+          },
+          handler: function () {
+             router.push(`/order-confirmation?orderId=${data.orderId}`);
+          },
+          modal: {
+            ondismiss: function () {
+              setApiError('Payment was not completed — you can try again.');
+              setIsSubmitting(false);
+            },
+          },
+        };
+
+        const rzp1 = new (window as any).Razorpay(options);
+        rzp1.on('payment.failed', function (response: any) {
+          setApiError(response.error.description || 'Payment failed. Please try again.');
+          setIsSubmitting(false);
+        });
+        rzp1.open();
+
       } catch (err: any) {
         setApiError(err.message || 'An unexpected error occurred while creating order.');
-      } finally {
         setIsSubmitting(false);
       }
     }
   };
 
-  if (isSubmitted && orderId) {
-    return (
-      <div className="min-h-screen bg-cream pt-[120px] pb-[80px] flex flex-col items-center justify-center px-4">
-        <div className="text-[64px] mb-[24px]">✅</div>
-        <h1 className="font-cormorant text-[36px] md:text-[48px] font-bold text-greenDark mb-[12px] text-center">
-          Order Created Successfully!
-        </h1>
-        <p className="text-[14px] font-mono bg-creamDark/60 text-greenDark px-[16px] py-[8px] rounded-full mb-[16px] border border-creamDark">
-          Order ID: {orderId}
-        </p>
-        <p className="text-[16px] text-textMid mb-[32px] text-center max-w-md leading-relaxed">
-          Order created — payment step coming next! Your details have been securely recorded in our database.
-        </p>
-        <Link 
-          href="/"
-          className="bg-greenDark text-white px-[32px] py-[16px] rounded-full text-[16px] font-bold hover:bg-greenMid transition-all shadow-md inline-block cursor-pointer"
-        >
-          Back to Home
-        </Link>
-      </div>
-    );
-  }
+
 
   const totalPrice = getTotalPrice();
   
   return (
     <div className="min-h-screen bg-cream relative">
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       <div className={`fixed top-0 left-0 w-full z-[100] bg-cream transition-all duration-200 ${isScrolled ? 'border-b border-creamDark shadow-sm py-[16px] md:py-[20px]' : 'py-[24px] md:py-[32px]'}`}>
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <Link href="/" className="inline-flex items-center text-textMid hover:text-greenDark font-medium text-[14px] mb-[12px] transition-colors">
