@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
 import { createClient } from '@/lib/supabaseServer';
+import { revalidatePath } from 'next/cache';
 
 export async function GET() {
   const supabase = await createClient();
@@ -47,6 +48,8 @@ export async function POST(request: Request) {
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
+
+    revalidatePath('/');
 
     return NextResponse.json(data, { status: 201 });
   } catch (err: any) {

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
 import { createClient } from '@/lib/supabaseServer';
+import { revalidatePath } from 'next/cache';
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient();
@@ -29,6 +30,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
+    revalidatePath('/');
+
     return NextResponse.json(data);
   } catch (err: any) {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
@@ -53,6 +56,8 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
+
+  revalidatePath('/');
 
   return NextResponse.json({ success: true });
 }
