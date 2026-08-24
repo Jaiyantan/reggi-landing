@@ -10,15 +10,19 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [isAdded, setIsAdded] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
 
-  const handleAddToCart = () => {
-    addItem(product.id);
+  const handleAddToCart = async () => {
+    setIsAdding(true);
+    await addItem(product.id);
+    setIsAdding(false);
     setIsAdded(true);
     setTimeout(() => {
       setIsAdded(false);
     }, 1000);
   };
+
 
   return (
     <div 
@@ -76,14 +80,16 @@ export default function ProductCard({ product }: ProductCardProps) {
           <button
             type="button"
             onClick={handleAddToCart}
+            disabled={isAdding}
             className={`flex items-center gap-[7px] px-[18px] py-[11px] rounded-[14px] text-[13px] font-bold cursor-pointer transition-all duration-200 ease-out active:scale-95 whitespace-nowrap shadow-sm bg-gradient-to-b ${
               isAdded
                 ? 'from-amber to-[#B56E25] text-white scale-105 shadow-md'
                 : 'from-greenDark to-[#1E3821] text-white hover:scale-[1.03] hover:shadow-order-btn-hover'
-            }`}
+            } ${isAdding ? 'opacity-70 cursor-wait' : ''}`}
           >
-            {isAdded ? 'Added ✓' : 'Add to Cart'}
+            {isAdding ? 'Adding...' : isAdded ? 'Added ✓' : 'Add to Cart'}
           </button>
+
         </div>
       </div>
     </div>

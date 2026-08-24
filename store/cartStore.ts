@@ -1,10 +1,15 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import { Product } from '@/data/products';
 
 export interface CartItem {
   productId: string;
   quantity: number;
+  product?: {
+    name: string;
+    image: string;
+    priceCurrent: string;
+    priceOriginal?: string;
+  };
 }
 
 export const parsePrice = (priceStr: string): number => {
@@ -15,95 +20,107 @@ export const parsePrice = (priceStr: string): number => {
 interface CartState {
   items: CartItem[];
   isDrawerOpen: boolean;
-  products: Product[];
+  totalItems: number;
+  totalPrice: number;
+  isLoading: boolean;
   
   // Actions
-  setProducts: (products: Product[]) => void;
-  addItem: (productId: string, quantity?: number) => void;
-  removeItem: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
-  clearCart: () => void;
+  fetchCart: () => Promise<void>;
+  addItem: (productId: string, quantity?: number) => Promise<void>;
+  removeItem: (productId: string) => Promise<void>;
+  updateQuantity: (productId: string, quantity: number) => Promise<void>;
+  clearCart: () => Promise<void>;
   openDrawer: () => void;
   closeDrawer: () => void;
   toggleDrawer: () => void;
-  
-  // Derived state getters
-  getTotalItems: () => number;
-  getTotalPrice: () => number;
 }
 
 export const useCartStore = create<CartState>()(
-  persist(
-    (set, get) => ({
-      items: [],
-      isDrawerOpen: false,
-      products: [],
+  (set, get) => ({
+    items: [],
+    isDrawerOpen: false,
+    totalItems: 0,
+    totalPrice: 0,
+    isLoading: false,
 
-      setProducts: (products) => set({ products }),
-
-      addItem: (productId: string, quantity = 1) => {
-        set((state) => {
-          const existingIndex = state.items.findIndex(
-            (item) => item.productId === productId
-          );
-          if (existingIndex > -1) {
-            const updated = [...state.items];
-            updated[existingIndex] = {
-              ...updated[existingIndex],
-              quantity: updated[existingIndex].quantity + quantity,
-            };
-            return { items: updated };
-          } else {
-            return {
-              items: [...state.items, { productId, quantity }],
-            };
-          }
-        });
-      },
-
-      removeItem: (productId: string) => {
-        set((state) => ({
-          items: state.items.filter((item) => item.productId !== productId),
-        }));
-      },
-
-      updateQuantity: (productId: string, quantity: number) => {
-        if (quantity <= 0) {
-          get().removeItem(productId);
-          return;
+    fetchCart: async () => {
+      set({ isLoading: true });
+      try {
+        const res = await fetch('/api/cart');
+        if (res.ok) {
+          const data = await res.json();
+          set({
+            items: data.items || [],
+            totalItems: data.totalItems || 0,
+            totalPrice: data.totalPrice || 0,
+          });
         }
-        set((state) => ({
-          items: state.items.map((item) =>
-            item.productId === productId ? { ...item, quantity } : item
-          ),
-        }));
-      },
+      } catch (error) {
+        console.error('Failed to fetch cart', error);
+      } finally {
+        set({ isLoading: false });
+      }
+    },
 
-      clearCart: () => {
-        set({ items: [] });
-      },
+    addItem: async (productId: string, quantity = 1) => {
+      set({ isLoading: true });
+      try {
+        await fetch('/api/cart/items', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ productId, quantity }),
+        });
+        await get().fetchCart();
+      } catch (error) {
+        console.error('Failed to add item', error);
+        set({ isLoading: false });
+      }
+    },
 
-      openDrawer: () => set({ isDrawerOpen: true }),
-      closeDrawer: () => set({ isDrawerOpen: false }),
-      toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen })),
+    removeItem: async (productId: string) => {
+      set({ isLoading: true });
+      try {
+        await fetch(`/api/cart/items/${productId}`, {
+          method: 'DELETE',
+        });
+        await get().fetchCart();
+      } catch (error) {
+        console.error('Failed to remove item', error);
+        set({ isLoading: false });
+      }
+    },
 
-      getTotalItems: () => {
-        return get().items.reduce((total, item) => total + item.quantity, 0);
-      },
+    updateQuantity: async (productId: string, quantity: number) => {
+      if (quantity <= 0) {
+        return get().removeItem(productId);
+      }
+      set({ isLoading: true });
+      try {
+        await fetch(`/api/cart/items/${productId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ quantity }),
+        });
+        await get().fetchCart();
+      } catch (error) {
+        console.error('Failed to update quantity', error);
+        set({ isLoading: false });
+      }
+    },
 
-      getTotalPrice: () => {
-        return get().items.reduce((total, item) => {
-          const product = get().products.find((p) => p.id === item.productId);
-          if (!product) return total;
-          const price = parsePrice(product.priceCurrent);
-          return total + price * item.quantity;
-        }, 0);
-      },
-    }),
-    {
-      name: 'reggi-cart-storage',
-      // Only persist items array to localStorage
-      partialize: (state) => ({ items: state.items }),
-    }
-  )
+    clearCart: async () => {
+      set({ isLoading: true });
+      try {
+        await fetch('/api/cart', { method: 'DELETE' });
+        await get().fetchCart();
+      } catch (error) {
+        console.error('Failed to clear cart', error);
+        set({ isLoading: false });
+      }
+    },
+
+    openDrawer: () => set({ isDrawerOpen: true }),
+    closeDrawer: () => set({ isDrawerOpen: false }),
+    toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen })),
+  })
 );

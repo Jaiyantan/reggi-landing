@@ -1,18 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { useCartStore } from '@/store/cartStore';
 import { Product } from '@/data/products';
 
 export default function StoreInitializer({ products }: { products: Product[] }) {
-  const initialized = useRef(false);
-
-  useEffect(() => {
-    if (!initialized.current) {
-      useCartStore.getState().setProducts(products);
-      initialized.current = true;
-    }
-  }, [products]);
-
+  // Products are now fetched server-side for cart integration,
+  // so we no longer need to initialize client state here.
   return null;
 }

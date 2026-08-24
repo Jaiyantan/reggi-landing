@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
-import { getProducts } from '@/lib/getProducts';
+import { resolveCartToken } from '@/lib/cartToken';
 import { INDIAN_STATES_AND_UTS } from '@/data/indianStates';
 
-const parsePrice = (priceStr: string): number => {
+const parsePrice = (priceStr: string | number | null): number => {
+  if (!priceStr) return 0;
+  if (typeof priceStr === 'number') return priceStr;
   const numeric = priceStr.replace(/[^0-9]/g, '');
   return numeric ? parseInt(numeric, 10) : 0;
 };
@@ -83,10 +85,36 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validate Items
-    if (!Array.isArray(items) || items.length === 0) {
+    const token = await resolveCartToken();
+    const { data: cartData } = await supabaseAdmin
+      .from('carts')
+      .select('id')
+      .eq('cart_token', token)
+      .single();
+
+    if (!cartData) {
       return NextResponse.json(
-        { error: 'Cart must contain at least one item.' },
+        { error: 'Cart not found.' },
+        { status: 404 }
+      );
+    }
+
+    const { data: cartItems } = await supabaseAdmin
+      .from('cart_items')
+      .select(`
+        quantity,
+        product_id,
+        products (
+          name,
+          price_current,
+          is_active
+        )
+      `)
+      .eq('cart_id', cartData.id);
+
+    if (!cartItems || cartItems.length === 0) {
+      return NextResponse.json(
+        { error: 'Cart is empty.' },
         { status: 400 }
       );
     }
@@ -94,33 +122,26 @@ export async function POST(request: Request) {
     let calculatedTotalAmount = 0;
     const itemSnapshots = [];
 
-    const products = await getProducts();
+    for (const item of cartItems) {
+      const product = item.products as any;
+      if (!product || product.is_active === false) continue;
 
-    for (const item of items) {
-      if (!item || !item.productId || typeof item.quantity !== 'number' || item.quantity <= 0) {
-        return NextResponse.json(
-          { error: 'Invalid item quantity or product ID in cart.' },
-          { status: 400 }
-        );
-      }
-
-      const product = products.find((p) => p.id === item.productId);
-      if (!product) {
-        return NextResponse.json(
-          { error: `Product with ID "${item.productId}" not found.` },
-          { status: 400 }
-        );
-      }
-
-      const unitPrice = parsePrice(product.priceCurrent);
+      const unitPrice = parsePrice(product.price_current);
       calculatedTotalAmount += unitPrice * item.quantity;
 
       itemSnapshots.push({
-        productId: product.id,
+        productId: item.product_id,
         name: product.name,
         price: unitPrice,
         quantity: item.quantity,
       });
+    }
+
+    if (itemSnapshots.length === 0) {
+      return NextResponse.json(
+        { error: 'No valid products in cart.' },
+        { status: 400 }
+      );
     }
 
     // Insert into Supabase using Admin client

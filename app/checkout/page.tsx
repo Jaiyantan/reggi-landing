@@ -8,7 +8,8 @@ import Link from 'next/link';
 import Script from 'next/script';
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, getTotalPrice, products } = useCartStore();
+  const items = useCartStore((state) => state.items);
+  const totalPrice = useCartStore((state) => state.totalPrice);
   const [mounted, setMounted] = useState(false);
 
   // Form states
@@ -187,11 +188,7 @@ export default function CheckoutPage() {
             city: formData.city,
             state: formData.state,
             pincode: formData.pincode,
-          },
-          items: items.map(item => ({
-            productId: item.productId,
-            quantity: item.quantity,
-          })),
+          }
         };
 
         const response = await fetch('/api/orders', {
@@ -260,11 +257,6 @@ export default function CheckoutPage() {
         setIsSubmitting(false);
       }
     }
-  };
-
-
-
-  const totalPrice = getTotalPrice();
   
   return (
     <div className="min-h-screen bg-cream relative">
@@ -499,7 +491,7 @@ export default function CheckoutPage() {
               
               <div className="space-y-[16px] max-h-[400px] overflow-y-auto pr-2">
                 {items.map((item) => {
-                  const product = products.find((p) => p.id === item.productId);
+                  const product = item.product;
                   if (!product) return null;
 
                   const unitPrice = parsePrice(product.priceCurrent);

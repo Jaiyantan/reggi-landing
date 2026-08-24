@@ -5,25 +5,24 @@ import { useCartStore } from '@/store/cartStore';
 
 export default function Nav() {
   const [mounted, setMounted] = useState(false);
-  const items = useCartStore((state) => state.items);
-  const getTotalItems = useCartStore((state) => state.getTotalItems);
+  const totalItems = useCartStore((state) => state.totalItems);
   const openDrawer = useCartStore((state) => state.openDrawer);
+  const fetchCart = useCartStore((state) => state.fetchCart);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
-
-  const totalItems = mounted ? getTotalItems() : 0;
+    fetchCart();
+  }, [fetchCart]);
 
   const [animateCart, setAnimateCart] = useState(false);
 
   useEffect(() => {
-    if (totalItems > 0) {
+    if (mounted && totalItems > 0) {
       setAnimateCart(true);
       const timer = setTimeout(() => setAnimateCart(false), 300);
       return () => clearTimeout(timer);
     }
-  }, [totalItems]);
+  }, [totalItems, mounted]);
 
   return (
     <nav className="sticky top-0 z-[100] flex items-center justify-between bg-cream border-b border-creamDark px-[20px] py-[6px] md:px-[40px] md:py-[8px] shadow-nav">

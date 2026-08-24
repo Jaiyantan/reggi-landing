@@ -9,10 +9,10 @@ export default function CartDrawer() {
   const isDrawerOpen = useCartStore((state) => state.isDrawerOpen);
   const closeDrawer = useCartStore((state) => state.closeDrawer);
   const items = useCartStore((state) => state.items);
-  const products = useCartStore((state) => state.products);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const removeItem = useCartStore((state) => state.removeItem);
-  const getTotalPrice = useCartStore((state) => state.getTotalPrice);
+  const totalPrice = useCartStore((state) => state.totalPrice);
+  const isLoading = useCartStore((state) => state.isLoading);
   const router = useRouter();
 
   useEffect(() => {
@@ -32,8 +32,6 @@ export default function CartDrawer() {
   }, [isDrawerOpen]);
 
   if (!mounted || !isDrawerOpen) return null;
-
-  const totalPrice = getTotalPrice();
 
   return (
     <div className="fixed inset-0 z-[1000] flex justify-end">
@@ -93,7 +91,7 @@ export default function CartDrawer() {
           /* Items List */
           <div className="flex-1 overflow-y-auto p-[20px] space-y-[16px]">
             {items.map((item) => {
-              const product = products.find((p) => p.id === item.productId);
+              const product = item.product;
               if (!product) return null;
 
               const unitPrice = parsePrice(product.priceCurrent);
@@ -128,8 +126,9 @@ export default function CartDrawer() {
                           onClick={() =>
                             updateQuantity(item.productId, item.quantity - 1)
                           }
+                          disabled={isLoading}
                           aria-label="Decrease quantity"
-                          className="w-[24px] h-[24px] rounded-full flex items-center justify-center text-greenDark font-bold hover:bg-creamDark transition-colors cursor-pointer text-[14px]"
+                          className="w-[24px] h-[24px] rounded-full flex items-center justify-center text-greenDark font-bold hover:bg-creamDark transition-colors cursor-pointer text-[14px] disabled:opacity-50"
                         >
                           -
                         </button>
@@ -141,8 +140,9 @@ export default function CartDrawer() {
                           onClick={() =>
                             updateQuantity(item.productId, item.quantity + 1)
                           }
+                          disabled={isLoading}
                           aria-label="Increase quantity"
-                          className="w-[24px] h-[24px] rounded-full flex items-center justify-center text-greenDark font-bold hover:bg-creamDark transition-colors cursor-pointer text-[14px]"
+                          className="w-[24px] h-[24px] rounded-full flex items-center justify-center text-greenDark font-bold hover:bg-creamDark transition-colors cursor-pointer text-[14px] disabled:opacity-50"
                         >
                           +
                         </button>
@@ -152,8 +152,9 @@ export default function CartDrawer() {
                       <button
                         type="button"
                         onClick={() => removeItem(item.productId)}
+                        disabled={isLoading}
                         aria-label="Remove item"
-                        className="text-textLight hover:text-redAccent p-[4px] transition-colors cursor-pointer"
+                        className="text-textLight hover:text-redAccent p-[4px] transition-colors cursor-pointer disabled:opacity-50"
                       >
                         <svg
                           className="w-[16px] h-[16px] stroke-current stroke-[2] fill-none"
