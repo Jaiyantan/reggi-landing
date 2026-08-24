@@ -27,20 +27,33 @@ export async function PATCH(
       return NextResponse.json({ error: 'Cart not found' }, { status: 404 });
     }
 
+    // Look up the actual product UUID using the slug
+    const { data: productData, error: productError } = await supabaseAdmin
+      .from('products')
+      .select('id')
+      .eq('slug', productId)
+      .single();
+
+    if (productError || !productData) {
+      return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    }
+
+    const realProductId = productData.id;
+
     if (quantity <= 0) {
       // Delete if quantity is 0 or less
       await supabaseAdmin
         .from('cart_items')
         .delete()
         .eq('cart_id', cartData.id)
-        .eq('product_id', productId);
+        .eq('product_id', realProductId);
     } else {
       // Update quantity
       await supabaseAdmin
         .from('cart_items')
         .update({ quantity: quantity, updated_at: new Date().toISOString() })
         .eq('cart_id', cartData.id)
-        .eq('product_id', productId);
+        .eq('product_id', realProductId);
     }
 
     return NextResponse.json({ success: true });
@@ -69,11 +82,20 @@ export async function DELETE(
       .single();
 
     if (cartData) {
-      await supabaseAdmin
-        .from('cart_items')
-        .delete()
-        .eq('cart_id', cartData.id)
-        .eq('product_id', productId);
+      // Look up the actual product UUID using the slug
+      const { data: productData } = await supabaseAdmin
+        .from('products')
+        .select('id')
+        .eq('slug', productId)
+        .single();
+
+      if (productData) {
+        await supabaseAdmin
+          .from('cart_items')
+          .delete()
+          .eq('cart_id', cartData.id)
+          .eq('product_id', productData.id);
+      }
     }
 
     return NextResponse.json({ success: true });

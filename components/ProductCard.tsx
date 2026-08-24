@@ -11,16 +11,27 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const [isAdded, setIsAdded] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = async () => {
     setIsAdding(true);
-    await addItem(product.id);
-    setIsAdding(false);
-    setIsAdded(true);
-    setTimeout(() => {
-      setIsAdded(false);
-    }, 1000);
+    setHasError(false);
+    try {
+      await addItem(product.id);
+      setIsAdded(true);
+      setTimeout(() => {
+        setIsAdded(false);
+      }, 1000);
+    } catch (error) {
+      console.error('Failed to add to cart:', error);
+      setHasError(true);
+      setTimeout(() => {
+        setHasError(false);
+      }, 2000);
+    } finally {
+      setIsAdding(false);
+    }
   };
 
 
@@ -82,12 +93,14 @@ export default function ProductCard({ product }: ProductCardProps) {
             onClick={handleAddToCart}
             disabled={isAdding}
             className={`flex items-center gap-[7px] px-[18px] py-[11px] rounded-[14px] text-[13px] font-bold cursor-pointer transition-all duration-200 ease-out active:scale-95 whitespace-nowrap shadow-sm bg-gradient-to-b ${
-              isAdded
+              hasError 
+                ? 'from-redAccent to-[#990000] text-white scale-105 shadow-md'
+                : isAdded
                 ? 'from-amber to-[#B56E25] text-white scale-105 shadow-md'
                 : 'from-greenDark to-[#1E3821] text-white hover:scale-[1.03] hover:shadow-order-btn-hover'
             } ${isAdding ? 'opacity-70 cursor-wait' : ''}`}
           >
-            {isAdding ? 'Adding...' : isAdded ? 'Added ✓' : 'Add to Cart'}
+            {isAdding ? 'Adding...' : hasError ? 'Error!' : isAdded ? 'Added ✓' : 'Add to Cart'}
           </button>
 
         </div>

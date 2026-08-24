@@ -34,6 +34,7 @@ export async function GET() {
         quantity,
         product_id,
         products (
+          slug,
           name,
           image_url,
           price_current,
@@ -55,18 +56,16 @@ export async function GET() {
     for (const item of (itemsData || [])) {
       const product = item.products as any;
       
-      // Cleanup logic: If product doesn't exist or is inactive, delete the cart_item
       if (!product || product.is_active === false) {
         await supabaseAdmin
           .from('cart_items')
           .delete()
           .eq('id', item.id);
-        continue; // Skip this item
+        continue;
       }
 
-      // Add to valid items and compute totals
       validItems.push({
-        productId: item.product_id,
+        productId: product.slug, // Map to slug for frontend
         quantity: item.quantity,
         product: {
           name: product.name,

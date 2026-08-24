@@ -23,30 +23,53 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Cart not found' }, { status: 404 });
     }
 
+    // Look up the actual product UUID using the slug (productId from frontend)
+    const { data: productData, error: productError } = await supabaseAdmin
+      .from('products')
+      .select('id')
+      .eq('slug', productId)
+      .single();
+
+    if (productError || !productData) {
+      return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    }
+
+    const realProductId = productData.id;
+
     // Check if item already exists
     const { data: existingItem } = await supabaseAdmin
       .from('cart_items')
       .select('id, quantity')
       .eq('cart_id', cartData.id)
-      .eq('product_id', productId)
+      .eq('product_id', realProductId)
       .maybeSingle();
 
     if (existingItem) {
       // Increment quantity
       const newQuantity = existingItem.quantity + quantity;
-      await supabaseAdmin
+      const { error: updateError } = await supabaseAdmin
         .from('cart_items')
         .update({ quantity: newQuantity, updated_at: new Date().toISOString() })
         .eq('id', existingItem.id);
+        
+      if (updateError) {
+        console.error('Cart Item Update Error:', updateError);
+        return NextResponse.json({ error: 'Failed to update item quantity', details: updateError }, { status: 500 });
+      }
     } else {
       // Insert new item
-      await supabaseAdmin
+      const { error: insertError } = await supabaseAdmin
         .from('cart_items')
         .insert({
           cart_id: cartData.id,
-          product_id: productId,
+          product_id: realProductId,
           quantity: quantity,
         });
+        
+      if (insertError) {
+        console.error('Cart Item Insert Error:', insertError);
+        return NextResponse.json({ error: 'Failed to insert item', details: insertError }, { status: 500 });
+      }
     }
 
     return NextResponse.json({ success: true });

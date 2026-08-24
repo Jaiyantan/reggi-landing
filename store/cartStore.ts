@@ -65,15 +65,22 @@ export const useCartStore = create<CartState>()(
     addItem: async (productId: string, quantity = 1) => {
       set({ isLoading: true });
       try {
-        await fetch('/api/cart/items', {
+        const res = await fetch('/api/cart/items', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ productId, quantity }),
         });
+        
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.error || 'Failed to add item');
+        }
+        
         await get().fetchCart();
       } catch (error) {
         console.error('Failed to add item', error);
         set({ isLoading: false });
+        throw error;
       }
     },
 

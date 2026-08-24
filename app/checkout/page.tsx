@@ -257,6 +257,7 @@ export default function CheckoutPage() {
         setIsSubmitting(false);
       }
     }
+  };
   
   return (
     <div className="min-h-screen bg-cream relative">
