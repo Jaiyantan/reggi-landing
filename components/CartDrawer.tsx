@@ -72,7 +72,7 @@ export default function CartDrawer() {
         {items.length === 0 ? (
           /* Empty State */
           <div className="flex-1 flex flex-col items-center justify-center p-[32px] text-center">
-            <div className="text-[54px] mb-[16px] animate-bounce">🫙</div>
+
             <h3 className="font-cormorant text-[24px] font-bold text-greenDark mb-[8px]">
               Your cart is empty
             </h3>
