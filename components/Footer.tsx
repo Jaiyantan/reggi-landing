@@ -332,7 +332,7 @@ export default function Footer() {
               "
             >
               <ColHeading>Company</ColHeading>
-              <FooterLink href="/#about">About Us</FooterLink>
+              <FooterLink href="/about">About Us</FooterLink>
               <FooterLink href="/#contact">Contact</FooterLink>
 
               <SubLabel>Legal</SubLabel>
