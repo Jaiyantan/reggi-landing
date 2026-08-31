@@ -14,7 +14,7 @@ const whyItems = [
   {
     image: '/images/why-reggi/spice-extracts.png',
     title: 'Rooted in Natural Spices',
-    desc: 'Time-tested spices come together with jujube fruit to create bold, distinctive flavors — nothing artificial, nothing rushed.',
+    desc: 'Time-tested spices come together with jujube fruit to create bold, distinctive flavors. Nothing artificial, nothing rushed.',
   },
   {
     image: '/images/why-reggi/responsibly-made.png',
@@ -24,7 +24,7 @@ const whyItems = [
   {
     image: '/images/why-reggi/no-additives.png',
     title: 'One Fruit, A Family of Flavours',
-    desc: 'Cumin ginger chilli, cardamom, and more — each variant is its own take on the same versatile base.',
+    desc: 'Cumin ginger chilli, cardamom, and more: each variant is its own take on the same versatile base.',
   },
 ];
 
@@ -45,7 +45,7 @@ export default function WhySection() {
           </h2>
           <p className="text-[14px] text-white/55 mt-[12px] leading-[1.6]">
             REGGI is a versatile fruit spread crafted from native Elanthai fruit and natural
-            spices — made to be enjoyed with almost any food, from breakfast to dinner.
+            spices, made to be enjoyed with almost any food, from breakfast to dinner.
           </p>
         </div>
 

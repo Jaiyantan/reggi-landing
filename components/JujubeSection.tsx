@@ -38,7 +38,7 @@ export default function JujubeSection() {
             of <span className="text-redAccent">Jujube</span>
           </h2>
           <p className="text-textMid text-[14px] leading-[1.7] mb-[24px]">
-            For centuries, Jujube fruit (Ziziphus jujuba) has been revered across Asia, the Middle East and the Mediterranean — known as the <em>&quot;Fruit of Immortality&quot;</em> and <em>&quot;Red Date&quot;</em> in ancient wellness traditions.
+            For centuries, Jujube fruit (Ziziphus jujuba) has been revered across Asia, the Middle East and the Mediterranean. It is known as the <em>&quot;Fruit of Immortality&quot;</em> and <em>&quot;Red Date&quot;</em> in ancient wellness traditions.
           </p>
           <div className="flex flex-col gap-[20px] mt-[28px]">
             {benefits.map((benefit, index) => (

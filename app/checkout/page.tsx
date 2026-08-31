@@ -239,7 +239,7 @@ export default function CheckoutPage() {
           },
           modal: {
             ondismiss: function () {
-              setApiError('Payment was not completed — you can try again.');
+              setApiError('Payment was not completed, but you can try again.');
               setIsSubmitting(false);
             },
           },

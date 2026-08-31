@@ -6,7 +6,7 @@ export default function CtaBand() {
         Infinite Health Benefits
       </h2>
       <p className="text-[16px] opacity-[0.88] mb-[32px]">
-        Join thousands of happy REGGI customers across India. Order directly through our WhatsApp catalogue — quick, easy, and personal.
+        Join thousands of happy REGGI customers across India. Order directly through our WhatsApp catalogue: quick, easy, and personal.
       </p>
       <a
         href="https://wa.me/c/917603922323"

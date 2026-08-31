@@ -253,7 +253,7 @@ export default function Footer() {
               {/* Description */}
               <p className="text-cream/70 text-[13px] leading-[1.75] mb-[22px]">
                 Hand-crafted from sun-dried Jujube fruit blended with organic spice extracts.
-                100% natural, no preservatives — just pure goodness in every drop.
+                100% natural, no preservatives: just pure goodness in every drop.
               </p>
 
               {/* WhatsApp */}
