@@ -41,7 +41,7 @@ export default function WhySection() {
           </div>
           <h2 className="font-cormorant text-[clamp(32px,4vw,48px)] font-semibold text-white tracking-[-0.01em] leading-[1.2]">
             Not Just a Sauce.<br />
-            A <span className="text-amberLight">Health Revolution.</span>
+            A <span className="text-amberLight">Spread for Every Meal.</span>
           </h2>
           <p className="text-[14px] text-white/55 mt-[12px] leading-[1.6]">
             Every bottle is a story of tradition, craftsmanship, and real ingredients.
