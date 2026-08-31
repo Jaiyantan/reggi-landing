@@ -22,9 +22,7 @@ export default function ProductsSection({ products }: { products: Product[] }) {
         <h2 className="font-cormorant text-[clamp(28px,4vw,40px)] font-bold text-greenDark leading-[1.2]">
           Choose Your <span className="text-redAccent">REGGI</span>
         </h2>
-        <p className="text-[15px] text-textMid mt-[12px] leading-[1.6]">
-          18 products across bottles, pouches & combos — all crafted with real Jujube and organic spice extracts.
-        </p>
+
       </div>
 
       <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-[28px]">
