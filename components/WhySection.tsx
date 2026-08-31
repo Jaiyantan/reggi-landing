@@ -3,28 +3,28 @@ import Image from 'next/image';
 const whyItems = [
   {
     image: '/images/why-reggi/pure-jujube.png',
-    title: 'Pure And High-Quality Jujube',
-    desc: 'We source our jujube fruits from the finest farms, ensuring they are naturally ripened.',
+    title: 'Native Elanthai Fruit, Naturally Sourced',
+    desc: 'The heart of every REGGI spread, hand-picked and naturally ripened for real flavor.',
   },
   {
     image: '/images/why-reggi/ready-to-eat.png',
-    title: 'Ready to Eat Anytime!',
-    desc: 'We understand that modern lifestyles demand on-the-go nutrition.',
+    title: 'A Spread for Every Meal',
+    desc: 'From breakfast toast to dinner sides, REGGI pairs effortlessly with almost anything on your plate.',
   },
   {
     image: '/images/why-reggi/spice-extracts.png',
-    title: 'Powerful Spice Extracts',
-    desc: 'We have carefully infused our extracts with functional spices such as Turmeric, Ginger, etc.',
+    title: 'Rooted in Natural Spices',
+    desc: 'Time-tested spices come together with jujube fruit to create bold, distinctive flavors — nothing artificial, nothing rushed.',
   },
   {
     image: '/images/why-reggi/responsibly-made.png',
-    title: 'Sourced & Responsibly Made',
-    desc: 'We are committed to eco-friendly practices, ensuring sustainable sourcing, ethical production.',
+    title: 'Crafted, Not Manufactured',
+    desc: 'Made in small batches with care, staying true to its roots as a real food, not a mass-produced condiment.',
   },
   {
     image: '/images/why-reggi/no-additives.png',
-    title: 'Free from Artificial Additives',
-    desc: 'No artificial flavors, and no refined sugars — just pure, wholesome goodness.',
+    title: 'One Fruit, A Family of Flavours',
+    desc: 'Cumin ginger chilli, cardamom, and more — each variant is its own take on the same versatile base.',
   },
 ];
 
@@ -44,7 +44,8 @@ export default function WhySection() {
             A <span className="text-amberLight">Spread for Every Meal.</span>
           </h2>
           <p className="text-[14px] text-white/55 mt-[12px] leading-[1.6]">
-            Every bottle is a story of tradition, craftsmanship, and real ingredients.
+            REGGI is a versatile fruit spread crafted from native Elanthai fruit and natural
+            spices — made to be enjoyed with almost any food, from breakfast to dinner.
           </p>
         </div>
 
