@@ -1,19 +1,19 @@
 const benefits = [
   {
-    title: 'Natural Stress Reliever',
-    desc: 'Rich in saponins and flavonoids with proven calming, stress-relieving properties.',
+    title: 'Naturally Nutrient-Rich',
+    desc: 'Elanthai naturally contains important nutrients including Iron, Vitamin C, Potassium, Phosphorus, Dietary Fibre and Calcium.',
   },
   {
-    title: 'Supports Heart Health',
-    desc: 'Bioactive compounds in jujube help support overall cardiovascular wellness.',
+    title: 'A Traditional Native Fruit',
+    desc: 'Elanthai has been enjoyed in India for generations and is a fruit many people remember as part of traditional food culture.',
   },
   {
-    title: 'Boosts Immunity',
-    desc: 'Used in ancient traditional medicines for its potent antiviral properties.',
+    title: 'Naturally Delicious & Versatile',
+    desc: 'REGGI transforms the distinctive sweet-tangy character of Elanthai into a spread you can enjoy with breakfast, snacks, lunch and dinner.',
   },
   {
-    title: 'Rich in Dietary Fibre',
-    desc: 'High fibre content aids in regulating digestion and healthy bowel movements.',
+    title: 'Enhanced with Selected Spices',
+    desc: 'Each REGGI flavour combines Elanthai with carefully selected spices such as Cardamom, Cinnamon, Clove, Ginger, Garlic, Chilli and Cumin for unique taste experiences.',
   },
 ];
 
@@ -33,12 +33,12 @@ export default function JujubeSection() {
             The Superfruit
           </div>
           <h2 className="font-cormorant text-[clamp(28px,4vw,40px)] font-bold text-greenDark leading-[1.2] mb-[14px]">
-            The Ancient Power
+            Meet the Fruit
             <br />
-            of <span className="text-redAccent">Jujube</span>
+            Behind <span className="text-redAccent">REGGI</span>
           </h2>
           <p className="text-textMid text-[14px] leading-[1.7] mb-[24px]">
-            For centuries, Jujube fruit (Ziziphus jujuba) has been revered across Asia, the Middle East and the Mediterranean. It is known as the <em>&quot;Fruit of Immortality&quot;</em> and <em>&quot;Red Date&quot;</em> in ancient wellness traditions.
+            Elanthai is a traditional native Indian fruit, naturally valued for its distinctive taste and nutritional profile. REGGI brings this remarkable fruit into your everyday meals in a delicious, versatile form.
           </p>
           <div className="flex flex-col gap-[20px] mt-[28px]">
             {benefits.map((benefit, index) => (
