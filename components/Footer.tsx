@@ -78,8 +78,7 @@ function FooterLink({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="block text-cream/90 text-sm leading-snug mb-[12px] no-underline
-                   hover:text-amberLight transition-colors duration-200"
+        className="block text-cream/90 text-[14px] md:text-sm leading-snug mb-[4px] py-[4px] md:py-0 md:mb-[12px] no-underline hover:text-amberLight transition-colors duration-200"
       >
         {children}
       </a>
@@ -88,8 +87,7 @@ function FooterLink({
   return (
     <Link
       href={href}
-      className="block text-cream/90 text-sm leading-snug mb-[12px] no-underline
-                 hover:text-amberLight transition-colors duration-200"
+      className="block text-cream/90 text-[14px] md:text-sm leading-snug mb-[4px] py-[4px] md:py-0 md:mb-[12px] no-underline hover:text-amberLight transition-colors duration-200"
     >
       {children}
     </Link>
@@ -312,16 +310,14 @@ export default function Footer() {
                 </FooterAccordion>
               </div>
 
-              <a
-                href="https://wa.me/c/917603922323"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/#products"
                 className="inline-flex items-center gap-[5px] mt-[20px] text-amberLight
                            text-[13px] font-semibold no-underline hover:text-white
                            transition-colors duration-200"
               >
                 View Full Catalogue →
-              </a>
+              </Link>
             </div>
 
             {/* ── Col 3: Company ── */}

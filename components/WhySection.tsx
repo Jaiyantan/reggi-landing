@@ -1,92 +1,152 @@
+'use client';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 const whyItems = [
   {
-    image: '/images/why-reggi/pure-jujube.png',
-    title: 'Native Elanthai Fruit, Naturally Sourced',
-    desc: 'The heart of every REGGI spread, hand-picked and naturally ripened for real flavor.',
+    imageSrc: '/images/native_elanthai.png',
+    colorClass: 'bg-greenLight text-white',
+    title: 'Native Elanthai (Indian Jujube)',
+    desc: <>A traditional Indian fruit naturally containing <strong>important nutrients</strong>.</>,
   },
   {
-    image: '/images/why-reggi/ready-to-eat.png',
-    title: 'A Spread for Every Meal',
-    desc: 'From breakfast toast to dinner sides, REGGI pairs effortlessly with almost anything on your plate.',
+    imageSrc: '/images/natural_spices.png',
+    colorClass: 'bg-amber text-white',
+    title: 'Blended with Natural Spices',
+    desc: <><strong>Five unique flavour combinations</strong> for every kind of taste.</>,
   },
   {
-    image: '/images/why-reggi/spice-extracts.png',
-    title: 'Rooted in Natural Spices',
-    desc: 'Time-tested spices come together with jujube fruit to create bold, distinctive flavors. Nothing artificial, nothing rushed.',
+    imageSrc: '/images/reggi_cuisine.png',
+    colorClass: 'bg-[#C16238] text-white', // Terracotta/orange custom inline since it's not in tailwind
+    title: 'One Spread, Many Uses',
+    desc: <><strong>Spread, dip, top, cook, mix or drink</strong> REGGI.</>,
   },
   {
-    image: '/images/why-reggi/responsibly-made.png',
-    title: 'Crafted, Not Manufactured',
-    desc: 'Made in small batches with care, staying true to its roots as a real food, not a mass-produced condiment.',
-  },
-  {
-    image: '/images/why-reggi/no-additives.png',
-    title: 'One Fruit, A Family of Flavours',
-    desc: 'Cumin ginger chilli, cardamom, and more: each variant is its own take on the same versatile base.',
+    imageSrc: '/images/reggi_all.png',
+    colorClass: 'bg-brownWarm text-white',
+    title: 'For Every Generation',
+    desc: <>From <strong>kids to senior citizens</strong>, enjoy REGGI your way.</>,
   },
 ];
 
 export default function WhySection() {
-  const topRow = whyItems.slice(0, 3);
-  const bottomRow = whyItems.slice(3);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    let observer: IntersectionObserver;
+
+    const timeout = setTimeout(() => {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
+            // Trigger animation when at least 30% is visible (using 0.25 as a safe float margin)
+            setIsVisible(true);
+          } else if (!entry.isIntersecting) {
+            // Only reset the animation when the section is COMPLETELY off-screen (0%)
+            setIsVisible(false);
+          }
+        },
+        { 
+          threshold: [0, 0.3], 
+          rootMargin: '0px' 
+        }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
+    }, 100);
+
+    return () => {
+      clearTimeout(timeout);
+      if (observer) observer.disconnect();
+    };
+  }, []);
 
   return (
-    <section className="bg-greenDark py-[50px] px-[20px] md:py-[90px] md:px-[40px] text-white animate-reveal">
-      <div className="max-w-[1080px] mx-auto">
-        <div className="text-center mb-[48px]">
-          <div className="inline-block text-amberLight tracking-[0.18em] text-[11px] font-bold uppercase mb-[12px]">
+    <section ref={sectionRef} className={`bg-cream py-[50px] px-[20px] md:py-[90px] md:px-[40px] overflow-hidden why-section ${isVisible ? 'is-visible' : ''}`}>
+      <style>{`
+        @keyframes whyRevealUp {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes whyRevealScale {
+          0% { opacity: 0; transform: scale(0.92); }
+          100% { opacity: 1; transform: scale(1); }
+        }
+        
+        /* Initial hidden states */
+        .why-anim-up { opacity: 0; transform: translateY(20px); }
+        .why-anim-scale { opacity: 0; transform: scale(0.92); }
+        
+        /* Triggered animation states */
+        .why-section.is-visible .why-anim-up {
+          animation: whyRevealUp 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .why-section.is-visible .why-anim-scale {
+          animation: whyRevealScale 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        /* Respect user reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+          .why-anim-up, .why-anim-scale {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+          }
+        }
+      `}</style>
+
+      <div className="max-w-[1200px] mx-auto">
+        <div className="text-center mb-[48px] md:mb-[64px]">
+          <div 
+            className="why-anim-up inline-block text-amber tracking-[0.18em] text-[11px] font-bold uppercase mb-[12px]"
+            style={{ animationDelay: '0ms' }}
+          >
             WHY REGGI
           </div>
-          <h2 className="font-cormorant text-[clamp(32px,4vw,48px)] font-semibold text-white tracking-[-0.01em] leading-[1.2]">
-            Not Just a Sauce.<br />
-            A <span className="text-amberLight">Spread for Every Meal.</span>
-          </h2>
-          <p className="text-[14px] text-white/55 mt-[12px] leading-[1.6]">
-            REGGI is a versatile fruit spread crafted from native Elanthai fruit and natural
-            spices, made to be enjoyed with almost any food, from breakfast to dinner.
-          </p>
+          <div className="why-anim-up" style={{ animationDelay: '100ms' }}>
+            <h2 className="font-cormorant text-[clamp(32px,4vw,40px)] font-extrabold text-textDark tracking-[-0.01em] leading-[1.2]">
+              Why REGGI is Special
+            </h2>
+          </div>
+          <div className="why-anim-up" style={{ animationDelay: '250ms' }}>
+            <p className="text-[16px] text-greenDark font-medium italic mt-[12px] leading-[1.6]">
+              A native fruit. Selected spices. Endless possibilities.
+            </p>
+          </div>
         </div>
 
-        {/* Top row — 3 items */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-[32px] md:gap-[48px] mt-[52px]">
-          {topRow.map((item, index) => (
-            <div key={index} className="flex flex-col items-center text-center group">
-              <div className="w-[90px] h-[90px] relative mb-[20px] transition-transform duration-300 ease-out group-hover:scale-110">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-contain"
-                />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-[32px] md:gap-[40px]">
+          {whyItems.map((item, index) => {
+            const baseDelay = 200 + (index * 150);
+            
+            return (
+              <div 
+                key={index} 
+                className="flex flex-col items-center text-center group p-[10px] md:hover:-translate-y-2 transition-transform duration-300 ease-out"
+              >
+                <div className="why-anim-scale" style={{ animationDelay: `${baseDelay}ms` }}>
+                  <div className={`w-[120px] h-[120px] rounded-full flex items-center justify-center mb-[20px] overflow-hidden shadow-sm md:group-hover:scale-105 transition-transform duration-300 ease-out ${item.colorClass}`}>
+                    <Image src={item.imageSrc} alt={item.title} width={120} height={120} className="w-full h-full object-cover" />
+                  </div>
+                </div>
+                
+                <div className="why-anim-up" style={{ animationDelay: `${baseDelay + 100}ms` }}>
+                  <h3 className="font-cormorant text-[20px] md:text-[22px] font-extrabold text-textDark mb-[12px] leading-[1.2]">
+                    {item.title}
+                  </h3>
+                </div>
+                
+                <div className="why-anim-up" style={{ animationDelay: `${baseDelay + 180}ms` }}>
+                  <p className="text-[16px] text-textDark/80 leading-[1.6] max-w-[260px]">
+                    {item.desc}
+                  </p>
+                </div>
               </div>
-              <h3 className="font-cormorant text-[19px] font-semibold text-amberLight mb-[8px] leading-[1.3]">
-                {item.title}
-              </h3>
-              <p className="text-[13px] text-white/60 leading-[1.7] max-w-[220px]">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom row — 2 items centered */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-[32px] md:gap-[48px] mt-[40px] max-w-[640px] mx-auto">
-          {bottomRow.map((item, index) => (
-            <div key={index} className="flex flex-col items-center text-center group">
-              <div className="w-[90px] h-[90px] relative mb-[20px] transition-transform duration-300 ease-out group-hover:scale-110">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <h3 className="font-cormorant text-[19px] font-semibold text-amberLight mb-[8px] leading-[1.3]">
-                {item.title}
-              </h3>
-              <p className="text-[13px] text-white/60 leading-[1.7] max-w-[220px]">{item.desc}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

@@ -1,6 +1,6 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import FloatingWhatsappButton from "@/components/FloatingWhatsappButton";
+
 import CartDrawer from "@/components/CartDrawer";
 import StoreInitializer from "@/components/StoreInitializer";
 import { getProducts } from "@/lib/getProducts";
@@ -22,7 +22,7 @@ export default async function AboutPage() {
           <p className="font-dmSans text-textDark text-[16px] md:text-[18px] leading-[1.8] font-normal mb-[32px] md:mb-[40px] max-w-3xl mx-auto text-center">
             At REGGI, our mission is to redefine healthy eating by harnessing the power
             of nature&apos;s finest ingredients. We are committed to creating delicious, ready-to-eat health
-            products made from nutrient-rich jujube fruits infused with carefully selected spice
+            products made from nutrient-rich Elanthai (Indian Jujube) infused with carefully selected spice
             extracts that enhance both flavor and wellness. By blending ancient wisdom with modern
             nutrition, we aim to provide a wholesome, functional, and convenient snacking option that
             supports overall well-being, digestion, and immunity. Our goal is to make healthier choices
@@ -40,7 +40,7 @@ export default async function AboutPage() {
       </div>
       
       <Footer />
-      <FloatingWhatsappButton />
+
       <CartDrawer />
     </main>
   );

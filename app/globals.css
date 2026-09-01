@@ -81,6 +81,15 @@ body {
   animation: revealUp 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 250ms ease-out forwards;
+}
+
 /* Multi-stop Hero Gradient */
 .hero-bg-gradient {
   background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 60%, #4e7a52 100%);
@@ -112,4 +121,13 @@ body {
 /* CTA Band Gradient */
 .cta-band-gradient {
   background: linear-gradient(135deg, var(--amber) 0%, var(--brown-warm) 100%);
+}
+
+/* Hide Scrollbar Cross-Browser */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }

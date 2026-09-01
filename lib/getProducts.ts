@@ -1,5 +1,5 @@
 import { supabase } from './supabaseClient';
-import { Product } from '@/data/products'; // We will redefine this type here or keep it compatible
+import { Product, products as staticProducts } from '@/data/products';
 
 export interface DBProduct {
   id: string; // uuid in db, but we'll map slug -> id for frontend compatibility
@@ -29,8 +29,8 @@ export async function getProducts(): Promise<Product[]> {
     return [];
   }
 
-  // Map DBProduct to the existing Product interface so UI components don't break
   return (data as DBProduct[]).map((p) => {
+    const staticProduct = staticProducts.find(sp => sp.id === p.slug);
     // Reconstruct the logic for tags based on original logic or simple price comparison
     let tag: string | undefined;
     let tagEmoji: string = '⭐'; // default fallback
@@ -57,6 +57,7 @@ export async function getProducts(): Promise<Product[]> {
       image: p.image_url,
       priceOriginal: p.price_original ? `₹${p.price_original}` : undefined,
       priceCurrent: `₹${p.price_current}`,
+      flavour_type: staticProduct?.flavour_type,
       tag,
       tagEmoji,
     };
