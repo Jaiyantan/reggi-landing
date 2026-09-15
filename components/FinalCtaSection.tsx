@@ -25,11 +25,14 @@ export default function FinalCtaSection() {
     };
   }, []);
 
-  const scrollToProducts = () => {
-    const productsSection = document.getElementById('products');
-    if (productsSection) {
-      productsSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const scrollToProducts = (category = 'ALL') => {
+    window.dispatchEvent(new CustomEvent('selectProductFilter', { detail: category }));
+    setTimeout(() => {
+      const productsSection = document.getElementById('products');
+      if (productsSection) {
+        productsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 50);
   };
 
   return (
@@ -97,13 +100,13 @@ export default function FinalCtaSection() {
 
             <div className="cta-anim-text w-full flex flex-col sm:flex-row items-center justify-center md:justify-start gap-[16px] md:mb-[48px]" style={{ animationDelay: '250ms' }}>
               <button 
-                onClick={scrollToProducts}
+                onClick={() => scrollToProducts('ALL')}
                 className="w-full sm:w-auto inline-flex items-center justify-center bg-greenDark hover:bg-greenDark/90 text-white font-dmSans font-bold text-[16px] py-[16px] px-[40px] rounded-pill transition-all duration-300 hover:-translate-y-[2px] shadow-sm"
               >
                 Shop REGGI &rarr;
               </button>
               <button 
-                onClick={scrollToProducts}
+                onClick={() => scrollToProducts('COMBOS')}
                 className="w-full sm:w-auto inline-flex items-center justify-center bg-transparent border border-greenDark/20 hover:border-greenDark text-greenDark font-dmSans font-bold text-[16px] py-[16px] px-[40px] rounded-pill transition-all duration-300 hover:-translate-y-[2px]"
               >
                 View Combos

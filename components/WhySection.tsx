@@ -148,6 +148,32 @@ export default function WhySection() {
             );
           })}
         </div>
+
+        {/* Conversion CTA */}
+        <div className="flex flex-col items-center text-center mt-[60px] mb-[10px] why-anim-up" style={{ animationDelay: '800ms' }}>
+          <h3 className="font-cormorant font-semibold text-[24px] md:text-[27px] text-textDark mb-[12px] md:mb-[16px]">
+            Curious about REGGI?
+          </h3>
+          <button 
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent('selectProductFilter', { detail: 'POUCHES' }));
+              setTimeout(() => {
+                const el = document.getElementById('products');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }, 50);
+            }}
+            className="inline-flex items-center justify-center text-textDark font-cormorant font-bold text-[22px] md:text-[26px] leading-[1.25] tracking-[-0.01em] group cursor-pointer p-[12px] -m-[12px] touch-manipulation"
+            aria-label="Give REGGI a taste"
+          >
+            <span className="relative pb-[1px] md:pb-[2px]">
+              Give REGGI a taste
+              <span className="absolute left-0 bottom-0 w-full h-[1px] bg-textDark origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
+            </span>
+            <span className="ml-[6px] transition-transform duration-300 ease-out group-hover:translate-x-[4px] font-sans font-medium text-[16px] md:text-[18px]">
+              →
+            </span>
+          </button>
+        </div>
       </div>
     </section>
   );

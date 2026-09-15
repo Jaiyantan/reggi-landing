@@ -88,12 +88,12 @@ export default function ProductCard({ product }: ProductCardProps) {
             type="button"
             onClick={handleAddToCart}
             disabled={isAdding}
-            className={`flex items-center gap-[6px] px-[14px] py-[8px] md:px-[16px] md:py-[10px] rounded-[12px] text-[12px] md:text-[13px] font-bold cursor-pointer transition-all duration-200 ease-out active:scale-95 whitespace-nowrap shadow-sm bg-gradient-to-b ${
+            className={`flex items-center gap-[6px] px-[14px] py-[8px] md:px-[16px] md:py-[10px] rounded-[12px] text-[12px] md:text-[13px] font-bold cursor-pointer transition-all duration-200 ease-out active:scale-95 whitespace-nowrap shadow-md bg-gradient-to-b ${
               hasError 
-                ? 'from-redAccent to-[#990000] text-white scale-105 shadow-md'
+                ? 'from-redAccent to-[#990000] text-white scale-105'
                 : isAdded
-                ? 'from-amber to-[#B56E25] text-white scale-105 shadow-md'
-                : 'from-greenDark to-[#1E3821] text-white hover:scale-[1.03] hover:shadow-order-btn-hover'
+                ? 'from-amber to-[#B56E25] text-white scale-105'
+                : 'from-greenMid to-greenDark text-white hover:scale-[1.03] hover:shadow-order-btn-hover'
             } ${isAdding ? 'opacity-70 cursor-wait' : ''}`}
           >
             {isAdding ? 'Adding...' : hasError ? 'Error!' : isAdded ? 'Added ✓' : 'Add to Cart'}

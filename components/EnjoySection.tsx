@@ -47,14 +47,18 @@ export default function EnjoySection() {
     const timeout = setTimeout(() => {
       observer = new IntersectionObserver(
         ([entry]) => {
-          // Increased threshold to 0.25 so it doesn't trigger when only the empty padding is visible
           if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
+            // Trigger animation when at least 30% is visible (using 0.25 as a safe float margin)
             setIsValuePropsVisible(true);
           } else if (!entry.isIntersecting) {
+            // Only reset the animation when the section is COMPLETELY off-screen (0%)
             setIsValuePropsVisible(false);
           }
         },
-        { threshold: [0, 0.3], rootMargin: '0px' }
+        {
+          threshold: [0, 0.3],
+          rootMargin: '0px'
+        }
       );
 
       if (valuePropsRef.current) {
@@ -82,7 +86,7 @@ export default function EnjoySection() {
       </div>
 
       {/* Use Case Gallery - Full Bleed Auto-Marquee */}
-      <div className="w-full relative mt-[20px] mb-[40px] md:mb-[60px]">
+      <div className="w-full relative mt-[20px]">
         <style>{`
           @keyframes autoMarquee {
             0% { transform: translateX(0); }
@@ -105,14 +109,14 @@ export default function EnjoySection() {
             }
           }
         `}</style>
-        
+
         <div className="flex hide-scrollbar custom-marquee-wrapper py-[20px] px-[20px] md:px-0 -my-[20px]">
           <div className="flex w-max custom-marquee-track">
             {/* Set 1 */}
             <div className="flex gap-[20px] px-[10px]">
               {useCases.map((useCase, index) => (
-                <div 
-                  key={`set1-${index}`} 
+                <div
+                  key={`set1-${index}`}
                   className="min-w-[260px] w-[80vw] md:w-[340px] flex-shrink-0 bg-white rounded-card overflow-hidden shadow-card hover:shadow-card-hover hover:scale-[1.06] hover:z-10 transition-all duration-[250ms] ease-out flex flex-col cursor-default group relative"
                 >
                   <div className="w-full aspect-[5/4] bg-[#F8F6F0] relative overflow-hidden">
@@ -134,12 +138,12 @@ export default function EnjoySection() {
                 </div>
               ))}
             </div>
-            
+
             {/* Set 2 (Seamless Loop Duplicate) */}
             <div className="flex gap-[20px] px-[10px]">
               {useCases.map((useCase, index) => (
-                <div 
-                  key={`set2-${index}`} 
+                <div
+                  key={`set2-${index}`}
                   className="min-w-[260px] w-[80vw] md:w-[340px] flex-shrink-0 bg-white rounded-card overflow-hidden shadow-card hover:shadow-card-hover hover:scale-[1.06] hover:z-10 transition-all duration-[250ms] ease-out flex flex-col cursor-default group relative"
                 >
                   <div className="w-full aspect-[5/4] bg-[#F8F6F0] relative overflow-hidden">
@@ -165,10 +169,33 @@ export default function EnjoySection() {
         </div>
       </div>
 
+      {/* CTA to Products */}
+      <div className="text-center mt-[32px] md:mt-[40px] mb-[60px] md:mb-[70px] px-[20px]">
+        <button
+          onClick={() => {
+            window.dispatchEvent(new CustomEvent('selectProductFilter', { detail: 'ALL' }));
+            setTimeout(() => {
+              const el = document.getElementById('products');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 50);
+          }}
+          className="inline-flex items-center justify-center text-textDark font-cormorant font-bold text-[22px] md:text-[26px] leading-[1.25] tracking-[-0.01em] group cursor-pointer p-[12px] -m-[12px] touch-manipulation"
+          aria-label="Get Your Favourite Flavour"
+        >
+          <span className="relative pb-[1px] md:pb-[2px]">
+            Get Your Favourite Flavour
+            <span className="absolute left-0 bottom-0 w-full h-[1px] bg-textDark origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
+          </span>
+          <span className="ml-[6px] transition-transform duration-300 ease-out group-hover:translate-x-[4px] font-sans font-medium text-[16px] md:text-[18px]">
+            →
+          </span>
+        </button>
+      </div>
+
       {/* Value Props Strip */}
-      <div 
-        ref={valuePropsRef} 
-        className={`bg-greenDark mt-[60px] md:mt-[60px] pt-[70px] pb-[70px] md:pt-[90px] md:pb-[90px] value-props-section ${isValuePropsVisible ? 'is-visible' : ''}`}
+      <div
+        ref={valuePropsRef}
+        className={`bg-greenDark pt-[70px] pb-[70px] md:pt-[90px] md:pb-[90px] value-props-section ${isValuePropsVisible ? 'is-visible' : ''}`}
       >
         <style>{`
           @keyframes valueRevealUp {
@@ -198,10 +225,10 @@ export default function EnjoySection() {
             }
           }
         `}</style>
-        
+
         <div className="max-w-[1200px] mx-auto px-[20px] md:px-[40px]">
           <div className="text-center mb-[48px] md:mb-[64px]">
-            <div 
+            <div
               className="value-anim-up inline-block text-[#D6A14D] tracking-[0.18em] text-[11px] font-bold uppercase mb-[12px]"
               style={{ animationDelay: '0ms' }}
             >
@@ -213,14 +240,14 @@ export default function EnjoySection() {
               </h2>
             </div>
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-[24px] md:gap-[32px]">
             {valueProps.map((prop, index) => {
               const baseDelay = 200 + (index * 150);
-              
+
               return (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="flex flex-col items-center text-center group p-[10px] md:hover:-translate-y-2 transition-transform duration-300 ease-out"
                 >
                   <div className="value-anim-scale" style={{ animationDelay: `${baseDelay}ms` }}>
@@ -228,13 +255,13 @@ export default function EnjoySection() {
                       <Image src={prop.imageSrc} alt={prop.title} width={96} height={96} className="w-full h-full object-cover" />
                     </div>
                   </div>
-                  
+
                   <div className="value-anim-up" style={{ animationDelay: `${baseDelay + 100}ms` }}>
                     <h3 className="font-dmSans font-bold text-[16px] text-white leading-[1.3] mb-[12px]">
                       {prop.title}
                     </h3>
                   </div>
-                  
+
                   <div className="value-anim-up" style={{ animationDelay: `${baseDelay + 180}ms` }}>
                     <p className="text-white/80 text-[14px] leading-[1.6] max-w-[200px] mx-auto">
                       {prop.desc}
@@ -243,6 +270,24 @@ export default function EnjoySection() {
                 </div>
               );
             })}
+          </div>
+
+          <div className="text-center mt-[55px] value-anim-up" style={{ animationDelay: '800ms' }}>
+            <h3 className="font-cormorant text-[24px] md:text-[28px] font-bold text-white mb-[24px]">
+              Ready to Make It Your Own?
+            </h3>
+            <button 
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent('selectProductFilter', { detail: 'ALL' }));
+                setTimeout(() => {
+                  const el = document.getElementById('products');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 50);
+              }}
+              className="inline-flex items-center justify-center bg-cream text-greenDark font-dmSans font-bold text-[14px] md:text-[15px] px-[32px] py-[16px] rounded-full hover:bg-white hover:-translate-y-[2px] transition-all duration-300 shadow-cta-btn hover:shadow-cta-btn-hover tracking-[0.05em]"
+            >
+              SHOP REGGI <span className="ml-[8px] font-sans text-[16px] transition-transform duration-300 group-hover:translate-x-[2px]">→</span>
+            </button>
           </div>
         </div>
       </div>

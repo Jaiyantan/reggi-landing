@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Product } from '@/data/products';
 import ProductCard from './ProductCard';
 
@@ -10,6 +10,19 @@ const filters: FilterType[] = ['ALL', 'BOTTLES', 'POUCHES', 'COMBOS', 'SPICY', '
 
 export default function ProductsSection({ products }: { products: Product[] }) {
   const [activeFilter, setActiveFilter] = useState<FilterType>('ALL');
+
+  useEffect(() => {
+    const handleSelectFilter = (e: any) => {
+      if (filters.includes(e.detail)) {
+        setActiveFilter(e.detail);
+      }
+    };
+    
+    window.addEventListener('selectProductFilter', handleSelectFilter);
+    return () => {
+      window.removeEventListener('selectProductFilter', handleSelectFilter);
+    };
+  }, []);
 
   const filteredProducts = products.filter((p) => {
     switch (activeFilter) {
@@ -39,7 +52,7 @@ export default function ProductsSection({ products }: { products: Product[] }) {
         <h2 className="font-cormorant text-[clamp(32px,4vw,48px)] font-bold text-textDark leading-[1.2]">
           Choose Your REGGI
         </h2>
-        <p className="text-[16px] text-textMid mt-[12px]">Explore Our Range of Flavours.</p>
+        <p className="text-[16px] text-textMid mt-[12px]">Five signature flavours. Choose how you want to enjoy REGGI.</p>
       </div>
 
       <div className="flex overflow-x-auto hide-scrollbar gap-[10px] mb-[40px] md:mb-[48px] justify-start md:justify-center px-[4px] py-[4px] pr-[20px] md:pr-0">

@@ -20,8 +20,8 @@ export default async function Home() {
       <Nav />
       <Hero />
       <WhySection />
-      <EnjoySection />
       <ProductsSection products={products} />
+      <EnjoySection />
       <TestimonialsSection />
       <JujubeSection />
       <FinalCtaSection />
