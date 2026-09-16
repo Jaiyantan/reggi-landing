@@ -176,7 +176,7 @@ export default function Nav() {
           {/* Cart Icon Button with Badge */}
           <button
             type="button"
-            onClick={openDrawer}
+            onClick={() => openDrawer()}
             aria-label="Open cart"
             className={`relative p-[8px] sm:p-[10px] bg-greenDark/5 hover:bg-greenDark/10 active:scale-95 text-greenDark rounded-full transition-all duration-200 cursor-pointer flex items-center justify-center ${
               animateCart ? 'scale-125' : ''
