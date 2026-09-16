@@ -54,7 +54,7 @@ export default function TestimonialsSection() {
       return (
         <div 
           key={index} 
-          className="relative min-w-[240px] w-[65vw] md:w-[260px] h-[340px] md:h-[380px] flex-shrink-0 bg-[#121212] rounded-[20px] overflow-hidden shadow-card hover:-translate-y-[4px] hover:shadow-card-hover transition-all duration-300 group cursor-pointer"
+          className="relative min-w-[240px] w-[80vw] sm:w-[320px] md:w-[260px] min-h-[320px] sm:min-h-[340px] md:h-[380px] flex-shrink-0 bg-[#121212] rounded-[20px] overflow-hidden shadow-card hover:-translate-y-[4px] hover:shadow-card-hover transition-all duration-300 group cursor-pointer"
         >
           {/* Video Thumbnail Background */}
           <img 
@@ -85,7 +85,7 @@ export default function TestimonialsSection() {
     return (
       <div 
         key={index} 
-        className="min-w-[240px] w-[65vw] md:w-[260px] h-[340px] md:h-[380px] flex-shrink-0 bg-white rounded-[20px] p-[24px] md:p-[28px] shadow-card hover:-translate-y-[4px] hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between"
+        className="min-w-[240px] w-[80vw] sm:w-[320px] md:w-[260px] min-h-[320px] sm:min-h-[340px] md:h-[380px] flex-shrink-0 bg-white rounded-[20px] p-[20px] sm:p-[24px] md:p-[28px] shadow-card hover:-translate-y-[4px] hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between"
       >
         <div>
           <div className="flex gap-[4px] mb-[20px]">
@@ -112,14 +112,14 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section className="py-[50px] md:py-[90px] bg-transparent animate-reveal">
-      <div className="max-w-[1200px] mx-auto px-[20px] md:px-[40px]">
-        <div className="text-center mb-[48px] md:mb-[64px]">
+    <section className="py-[40px] md:py-[90px] bg-transparent animate-reveal">
+      <div className="max-w-[1200px] mx-auto px-[16px] sm:px-[20px] md:px-[40px]">
+        <div className="text-center mb-[36px] md:mb-[64px]">
           <div>
-            <h2 className="font-cormorant text-[clamp(32px,4vw,48px)] font-bold text-textDark leading-[1.2]">
+            <h2 className="font-cormorant text-[clamp(28px,4vw,48px)] font-bold text-textDark leading-[1.2]">
               Real People, Real Love
             </h2>
-            <p className="text-[16px] text-textMid mt-[12px]">
+            <p className="text-[15px] md:text-[16px] text-textMid mt-[8px] md:mt-[12px]">
               Here's how our customers enjoy REGGI!
             </p>
           </div>
@@ -137,10 +137,18 @@ export default function TestimonialsSection() {
             animation: testimonialMarquee 40s linear infinite;
           }
           .testimonial-marquee-wrapper {
-            overflow: hidden;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-x;
+          }
+          @media (min-width: 768px) {
+            .testimonial-marquee-wrapper {
+              overflow: hidden;
+            }
           }
           
-          .testimonial-marquee-track:hover {
+          .testimonial-marquee-track:hover,
+          .testimonial-marquee-track:active {
             animation-play-state: paused;
           }
           
@@ -155,7 +163,7 @@ export default function TestimonialsSection() {
           }
         `}</style>
         
-        <div className="flex hide-scrollbar testimonial-marquee-wrapper py-[10px] -my-[10px]">
+        <div className="flex hide-scrollbar testimonial-marquee-wrapper py-[10px] -my-[10px] overflow-x-auto md:overflow-hidden touch-pan-x cursor-grab active:cursor-grabbing">
           <div className="flex w-max testimonial-marquee-track">
             {/* Set 1 */}
             <div className="flex gap-[24px] px-[12px]">

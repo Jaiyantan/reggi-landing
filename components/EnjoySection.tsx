@@ -96,9 +96,17 @@ export default function EnjoySection() {
             will-change: transform;
           }
           .custom-marquee-wrapper {
-            overflow: hidden;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-x;
           }
-          .custom-marquee-wrapper:hover .custom-marquee-track {
+          @media (min-width: 768px) {
+            .custom-marquee-wrapper {
+              overflow: hidden;
+            }
+          }
+          .custom-marquee-wrapper:hover .custom-marquee-track,
+          .custom-marquee-wrapper:active .custom-marquee-track {
             animation-play-state: paused;
           }
           
@@ -113,7 +121,7 @@ export default function EnjoySection() {
           }
         `}</style>
 
-        <div className="flex hide-scrollbar custom-marquee-wrapper py-[20px] px-[20px] md:px-0 -my-[20px]">
+        <div className="flex hide-scrollbar custom-marquee-wrapper py-[20px] px-[16px] md:px-0 -my-[20px] overflow-x-auto md:overflow-hidden touch-pan-x cursor-grab active:cursor-grabbing">
           <div className="flex w-max custom-marquee-track">
             {/* Set 1 */}
             <div className="flex gap-[20px] px-[10px]">
@@ -248,29 +256,29 @@ export default function EnjoySection() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-[24px] md:gap-[32px]">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-[16px] sm:gap-[24px] md:gap-[32px]">
             {valueProps.map((prop, index) => {
               const baseDelay = 200 + (index * 150);
 
               return (
                 <div
                   key={index}
-                  className="flex flex-col items-center text-center group p-[10px] md:hover:-translate-y-2 transition-transform duration-300 ease-out"
+                  className="flex flex-col items-center text-center group p-[8px] sm:p-[10px] md:hover:-translate-y-2 transition-transform duration-300 ease-out"
                 >
                   <div className="value-anim-scale" style={{ animationDelay: `${baseDelay}ms` }}>
-                    <div className="w-[114px] h-[114px] md:w-[130px] md:h-[130px] rounded-full bg-[#365640] flex items-center justify-center mb-[20px] text-[#D6A14D] overflow-hidden shadow-sm md:group-hover:scale-105 transition-transform duration-300 ease-out">
+                    <div className="w-[96px] h-[96px] sm:w-[114px] sm:h-[114px] md:w-[130px] md:h-[130px] rounded-full bg-[#365640] flex items-center justify-center mb-[16px] sm:mb-[20px] text-[#D6A14D] overflow-hidden shadow-sm md:group-hover:scale-105 transition-transform duration-300 ease-out">
                       <Image src={prop.imageSrc} alt={prop.title} width={130} height={130} className="w-full h-full object-cover" />
                     </div>
                   </div>
 
                   <div className="value-anim-up" style={{ animationDelay: `${baseDelay + 100}ms` }}>
-                    <h3 className="font-dmSans font-bold text-[16px] text-white leading-[1.3] mb-[12px]">
+                    <h3 className="font-dmSans font-bold text-[15px] sm:text-[16px] text-white leading-[1.3] mb-[8px] sm:mb-[12px]">
                       {prop.title}
                     </h3>
                   </div>
 
                   <div className="value-anim-up" style={{ animationDelay: `${baseDelay + 180}ms` }}>
-                    <p className="text-white/80 text-[14px] leading-[1.6] max-w-[200px] mx-auto">
+                    <p className="text-white/80 text-[13px] sm:text-[14px] leading-[1.6] max-w-[200px] mx-auto">
                       {prop.desc}
                     </p>
                   </div>
@@ -279,8 +287,8 @@ export default function EnjoySection() {
             })}
           </div>
 
-          <div className="text-center mt-[55px] value-anim-up" style={{ animationDelay: '800ms' }}>
-            <h3 className="font-cormorant text-[24px] md:text-[28px] font-bold text-white mb-[24px]">
+          <div className="text-center mt-[48px] md:mt-[55px] value-anim-up max-w-[360px] sm:max-w-none mx-auto" style={{ animationDelay: '800ms' }}>
+            <h3 className="font-cormorant text-[22px] sm:text-[24px] md:text-[28px] font-bold text-white mb-[20px] sm:mb-[24px]">
               Ready to Make It Your Own?
             </h3>
             <button 
@@ -291,7 +299,7 @@ export default function EnjoySection() {
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }, 50);
               }}
-              className="inline-flex items-center justify-center bg-cream text-greenDark font-dmSans font-bold text-[14px] md:text-[15px] px-[32px] py-[16px] rounded-full hover:bg-white hover:-translate-y-[2px] transition-all duration-300 shadow-cta-btn hover:shadow-cta-btn-hover tracking-[0.05em]"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-cream text-greenDark font-dmSans font-bold text-[14px] md:text-[15px] px-[24px] sm:px-[32px] py-[16px] min-h-[48px] rounded-full hover:bg-white hover:-translate-y-[2px] transition-all duration-300 shadow-cta-btn hover:shadow-cta-btn-hover tracking-[0.05em]"
             >
               SHOP REGGI <span className="ml-[8px] font-sans text-[16px] transition-transform duration-300 group-hover:translate-x-[2px]">→</span>
             </button>

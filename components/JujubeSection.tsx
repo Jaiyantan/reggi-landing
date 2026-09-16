@@ -50,7 +50,7 @@ export default function JujubeSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className={`bg-cream py-[64px] md:py-[80px] px-[20px] md:px-[40px] overflow-hidden jujube-section ${isVisible ? 'is-visible' : ''}`}>
+    <section ref={sectionRef} className={`bg-cream py-[48px] sm:py-[64px] md:py-[80px] px-[16px] sm:px-[20px] md:px-[40px] overflow-hidden jujube-section ${isVisible ? 'is-visible' : ''}`}>
       <style>{`
         @keyframes jujubeRevealUp {
           0% { opacity: 0; transform: translateY(24px); }
@@ -92,7 +92,7 @@ export default function JujubeSection() {
             <div className="jujube-anim-up inline-block text-[11px] tracking-[0.14em] uppercase text-amber font-bold mb-[12px]" style={{ animationDelay: '0ms' }}>
               MEET THE FRUIT
             </div>
-            <h2 className="jujube-anim-up font-cormorant text-[clamp(32px,8vw,44px)] font-bold text-textDark leading-[1.1]" style={{ animationDelay: '100ms' }}>
+            <h2 className="jujube-anim-up font-cormorant text-[clamp(28px,7vw,44px)] font-bold text-textDark leading-[1.15]" style={{ animationDelay: '100ms' }}>
               Meet the Fruit
               <br />
               Behind <span className="text-redAccent">REGGI</span>
@@ -100,7 +100,7 @@ export default function JujubeSection() {
           </div>
           
           {/* Intro (Mobile: order-3) */}
-          <p className="order-3 md:order-none jujube-anim-up text-textMid text-[15px] leading-[1.8] mb-[8px] md:mb-[24px] max-w-[480px] text-center md:text-left mx-auto md:mx-0" style={{ animationDelay: '300ms' }}>
+          <p className="order-3 md:order-none jujube-anim-up text-textMid text-[14px] sm:text-[15px] leading-[1.7] sm:leading-[1.8] mb-[8px] md:mb-[24px] max-w-[480px] text-center md:text-left mx-auto md:mx-0" style={{ animationDelay: '300ms' }}>
             Elanthai is a traditional native Indian fruit, loved for generations for its distinctive sweet-tangy taste and natural character. REGGI brings this remarkable fruit into everyday food in a delicious way.
           </p>
           
@@ -111,7 +111,7 @@ export default function JujubeSection() {
               return (
                 <div
                   key={index}
-                  className="jujube-anim-up p-[20px_24px] bg-[#FAFAFA] rounded-[16px] md:rounded-[20px] border border-black/5 shadow-sm transition-all duration-300 ease-out hover:-translate-y-[4px] hover:shadow-card-hover flex items-start gap-[20px]"
+                  className="jujube-anim-up p-[16px_18px] sm:p-[20px_24px] bg-[#FAFAFA] rounded-[16px] md:rounded-[20px] border border-black/5 shadow-sm transition-all duration-300 ease-out hover:-translate-y-[4px] hover:shadow-card-hover flex items-start gap-[14px] sm:gap-[20px]"
                   style={{ animationDelay: `${animDelay}ms` }}
                 >
                   <div className="font-cormorant text-[28px] md:text-[32px] text-redAccent opacity-90 leading-none font-medium mt-[-2px]">

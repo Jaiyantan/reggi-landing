@@ -65,7 +65,7 @@ export default function WhySection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className={`bg-cream pt-[50px] pb-[44px] px-[20px] md:pt-[90px] md:pb-[68px] md:px-[40px] overflow-hidden why-section ${isVisible ? 'is-visible' : ''}`}>
+    <section ref={sectionRef} className={`bg-cream pt-[50px] pb-[44px] px-[16px] sm:px-[20px] md:pt-[90px] md:pb-[68px] md:px-[40px] overflow-hidden why-section ${isVisible ? 'is-visible' : ''}`}>
       <style>{`
         @keyframes whyRevealUp {
           0% { opacity: 0; transform: translateY(20px); }
@@ -107,7 +107,7 @@ export default function WhySection() {
             WHY REGGI
           </div>
           <div className="why-anim-up" style={{ animationDelay: '100ms' }}>
-            <h2 className="font-cormorant text-[clamp(32px,4vw,40px)] font-extrabold text-textDark tracking-[-0.01em] leading-[1.2]">
+            <h2 className="font-cormorant text-[clamp(28px,4vw,40px)] font-extrabold text-textDark tracking-[-0.01em] leading-[1.2]">
               Why REGGI is Special
             </h2>
           </div>

@@ -62,7 +62,7 @@ export default function ProductsSection({ products }: { products: Product[] }) {
   });
 
   return (
-    <section id="products" className="pt-[36px] pb-[48px] md:pt-[52px] md:pb-[64px] px-[20px] md:px-[40px] max-w-[1200px] mx-auto animate-reveal scroll-mt-[70px]">
+    <section id="products" className="pt-[36px] pb-[48px] md:pt-[52px] md:pb-[64px] px-[16px] sm:px-[20px] md:px-[40px] max-w-[1200px] mx-auto animate-reveal scroll-mt-[70px]">
       
       <style>{`
         @keyframes textWipeLtr {
@@ -135,12 +135,12 @@ export default function ProductsSection({ products }: { products: Product[] }) {
 
       {/* Format Filter Row */}
       <div className="flex items-center justify-center mb-[32px] md:mb-[36px]">
-        <div className="flex overflow-x-auto hide-scrollbar gap-[8px] justify-center px-[4px] py-[2px] snap-x snap-mandatory">
+        <div className="w-full max-w-full flex overflow-x-auto hide-scrollbar gap-[8px] justify-start sm:justify-center px-[4px] py-[4px] snap-x snap-mandatory">
           {formatFilters.map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFormat(filter)}
-              className={`snap-start whitespace-nowrap px-[18px] md:px-[22px] h-[40px] md:h-[44px] flex items-center justify-center rounded-[100px] text-[14px] font-medium tracking-[0.02em] transition-all duration-200 cursor-pointer border ${
+              className={`snap-start whitespace-nowrap px-[18px] md:px-[22px] h-[44px] min-h-[44px] flex items-center justify-center rounded-[100px] text-[14px] font-medium tracking-[0.02em] transition-all duration-200 cursor-pointer border ${
                 activeFormat === filter
                   ? 'bg-greenDark text-[#F8F4EA] border-greenDark'
                   : 'bg-transparent text-textDark/80 border-[#DED7C9] hover:border-greenDark/40 hover:text-greenDark'
@@ -156,7 +156,7 @@ export default function ProductsSection({ products }: { products: Product[] }) {
       {sortedProducts.length > 0 ? (
         <div 
           key={activeFormat}
-          className="grid grid-cols-2 md:grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-x-[12px] gap-y-[24px] md:gap-[28px] animate-fade-in"
+          className="grid grid-cols-1 min-[360px]:grid-cols-2 md:grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-x-[12px] gap-y-[24px] md:gap-[28px] animate-fade-in"
         >
           {sortedProducts.map((p) => (
             <ProductCard key={p.id} product={p} />

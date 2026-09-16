@@ -1,8 +1,8 @@
 export default function Hero() {
   return (
-    <section className="relative w-full h-[80vh] md:h-auto md:aspect-[1920/982] bg-black overflow-hidden">
+    <section className="relative w-full aspect-[16/9] sm:aspect-[1920/982] h-auto bg-black overflow-hidden">
       <video
-        className="absolute inset-0 w-full h-full object-cover object-center"
+        className="w-full h-full object-cover object-center"
         autoPlay
         muted
         loop

@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { ShieldCheck, Truck, SealCheck } from '@phosphor-icons/react';
+import CertificatesStrip from './CertificatesStrip';
 
 export default function FinalCtaSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -122,12 +123,12 @@ export default function FinalCtaSection() {
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
 
-      <div className="max-w-[1200px] mx-auto px-[20px] md:px-[40px] relative z-10">
+      <div className="max-w-[1200px] mx-auto px-[16px] sm:px-[20px] md:px-[40px] relative z-10">
         <div className="flex flex-col md:grid md:grid-cols-12 gap-y-[32px] md:gap-x-[48px] lg:gap-x-[80px] items-center">
           
           {/* Content Column (5 columns on desktop, full width on mobile) */}
           <div className="w-full md:col-span-5 z-10 flex flex-col items-center md:items-start text-center md:text-left">
-            <h2 className="cta-anim-up font-cormorant text-[clamp(40px,5vw,56px)] font-bold text-textDark leading-[1.2] md:mb-[20px] tracking-tight" style={{ animationDelay: '0ms' }}>
+            <h2 className="cta-anim-up font-cormorant text-[clamp(32px,5vw,56px)] font-bold text-textDark leading-[1.2] md:mb-[20px] tracking-tight" style={{ animationDelay: '0ms' }}>
               Find Your Favourite{' '}
               <span className="text-wipe-loop text-redAccent">REGGI</span>
             </h2>
@@ -176,6 +177,11 @@ export default function FinalCtaSection() {
                 <SealCheck size={16} weight="duotone" className="text-greenDark shrink-0" />
                 <span className="font-dmSans text-[10px] sm:text-[11px] lg:text-[12px] tracking-wide font-medium">100% Quality Assured</span>
               </div>
+            </div>
+
+            {/* Certification Badges */}
+            <div className="cta-anim-up w-full mt-[28px] md:mt-[32px]" style={{ animationDelay: '350ms' }}>
+              <CertificatesStrip variant="compact" />
             </div>
           </div>
 

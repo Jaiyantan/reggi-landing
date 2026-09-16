@@ -90,10 +90,10 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* BOTTOM ROW: PRICE & ADD TO CART */}
-        <div className="flex items-end justify-between pt-[12px] border-t border-black/5 mt-auto">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-[10px] pt-[12px] border-t border-black/5 mt-auto">
           
           {/* 5. PRICE */}
-          <div className="flex flex-col">
+          <div className="flex items-baseline gap-[6px] sm:flex-col sm:gap-0">
             {product.priceOriginal && (
               <span className="text-[11px] text-textMid/60 line-through mb-[1px]">
                 {product.priceOriginal}
@@ -109,7 +109,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             type="button"
             onClick={handleAddToCart}
             disabled={isAdding}
-            className={`flex items-center justify-center min-w-[90px] px-[14px] py-[8px] md:py-[10px] rounded-[100px] text-[12px] font-bold cursor-pointer transition-all duration-200 ease-out whitespace-nowrap border ${
+            className={`w-full sm:w-auto flex items-center justify-center min-w-[90px] min-h-[42px] sm:min-h-[40px] px-[14px] py-[8px] md:py-[10px] rounded-[100px] text-[12px] md:text-[13px] font-bold cursor-pointer transition-all duration-200 ease-out whitespace-nowrap border ${
               hasError 
                 ? 'bg-redAccent border-redAccent text-white'
                 : isAdded

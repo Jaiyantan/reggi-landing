@@ -207,7 +207,7 @@ export default function Footer() {
       {/* Thin green-to-amber accent line at top */}
       <div className="h-[3px] bg-gradient-to-r from-greenMid via-amberLight to-greenMid" />
 
-      <div className="px-[24px] pt-[56px] pb-[40px] md:px-[48px] lg:px-[64px]">
+      <div className="px-[16px] sm:px-[24px] pt-[48px] sm:pt-[56px] pb-[40px] md:px-[48px] lg:px-[64px]">
         <div className="max-w-[1200px] mx-auto">
 
           {/* ── 4-column equal-width grid ───────────────────────────────
@@ -383,7 +383,7 @@ export default function Footer() {
               flex flex-col md:flex-row md:items-center md:justify-between
               gap-[12px]
               text-xs text-cream/50
-              pr-[108px] md:pr-0
+              pr-[72px] sm:pr-[96px] md:pr-0
             "
           >
             <span>&copy; {year} REGGI. All rights reserved.</span>

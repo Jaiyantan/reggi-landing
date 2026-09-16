@@ -90,10 +90,9 @@ export default function Nav() {
     }
 
     if (targetEl) {
-      const navEl = document.querySelector('nav');
-      const navHeight = navEl ? navEl.offsetHeight : 74;
+      const headerOffset = 120;
       const elementPosition = targetEl.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = Math.max(0, elementPosition - navHeight);
+      const offsetPosition = Math.max(0, elementPosition - headerOffset);
 
       window.scrollTo({
         top: offsetPosition,
@@ -103,8 +102,8 @@ export default function Nav() {
   };
 
   return (
-    <nav className="sticky top-0 z-[100] bg-cream border-b border-creamDark shadow-nav">
-      <div className="max-w-[1400px] mx-auto px-[16px] sm:px-[24px] md:px-[40px] h-[68px] md:h-[74px] flex items-center justify-between gap-[16px]">
+    <nav className="sticky top-[36px] z-[100] bg-cream border-b border-creamDark shadow-nav">
+      <div className="max-w-[1400px] mx-auto px-[12px] sm:px-[24px] md:px-[40px] h-[64px] sm:h-[68px] md:h-[74px] flex items-center justify-between gap-[8px] sm:gap-[16px]">
         {/* Left: REGGI Logo */}
         <div className="flex items-center shrink-0">
           <a
@@ -120,7 +119,7 @@ export default function Nav() {
             <img
               src="/images/reggi-logo.jpg"
               alt="REGGI Logo"
-              className="h-[36px] md:h-[42px] object-contain"
+              className="h-[30px] sm:h-[36px] md:h-[42px] object-contain"
             />
           </a>
         </div>
@@ -172,13 +171,13 @@ export default function Nav() {
         </div>
 
         {/* Right: Cart, SHOP REGGI, and Mobile Hamburger */}
-        <div className="flex items-center gap-[8px] sm:gap-[12px] md:gap-[16px] shrink-0">
+        <div className="flex items-center gap-[6px] sm:gap-[12px] md:gap-[16px] shrink-0">
           {/* Cart Icon Button with Badge */}
           <button
             type="button"
             onClick={() => openDrawer()}
             aria-label="Open cart"
-            className={`relative p-[8px] sm:p-[10px] bg-greenDark/5 hover:bg-greenDark/10 active:scale-95 text-greenDark rounded-full transition-all duration-200 cursor-pointer flex items-center justify-center ${
+            className={`relative min-w-[44px] min-h-[44px] p-[8px] sm:p-[10px] bg-greenDark/5 hover:bg-greenDark/10 active:scale-95 text-greenDark rounded-full transition-all duration-200 cursor-pointer flex items-center justify-center ${
               animateCart ? 'scale-125' : ''
             }`}
           >
@@ -195,7 +194,7 @@ export default function Nav() {
 
             {totalItems > 0 && (
               <span
-                className={`absolute -top-[4px] -right-[4px] bg-redAccent text-white text-[11px] font-bold h-[20px] min-w-[20px] px-[5px] rounded-full flex items-center justify-center shadow-sm transition-transform duration-200 ${
+                className={`absolute -top-[2px] -right-[2px] bg-redAccent text-white text-[11px] font-bold h-[20px] min-w-[20px] px-[5px] rounded-full flex items-center justify-center shadow-sm transition-transform duration-200 ${
                   animateCart ? 'scale-125' : 'scale-100'
                 }`}
               >
@@ -224,7 +223,7 @@ export default function Nav() {
                 }
               }, 50);
             }}
-            className="flex items-center gap-[6px] sm:gap-[8px] bg-gradient-to-b from-greenDark to-[#1F3621] text-white px-[12px] py-[7px] sm:px-[18px] sm:py-[8px] md:px-[22px] md:py-[10px] rounded-[18px] no-underline text-[12px] sm:text-[13px] md:text-[14px] font-semibold transition-all duration-200 ease-out hover:scale-[1.02] active:scale-95 shadow-sm hover:shadow-card-hover shrink-0"
+            className="flex items-center justify-center gap-[6px] sm:gap-[8px] bg-gradient-to-b from-greenDark to-[#1F3621] text-white px-[12px] py-[8px] sm:px-[18px] sm:py-[8px] md:px-[22px] md:py-[10px] min-h-[40px] sm:min-h-[44px] rounded-[18px] no-underline text-[12px] sm:text-[13px] md:text-[14px] font-semibold transition-all duration-200 ease-out hover:scale-[1.02] active:scale-95 shadow-sm hover:shadow-card-hover shrink-0"
           >
             <span>SHOP REGGI</span>
           </a>
@@ -235,7 +234,7 @@ export default function Nav() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isMobileMenuOpen}
-            className="md:hidden p-[8px] text-greenDark hover:bg-greenDark/5 active:scale-95 rounded-full transition-colors cursor-pointer flex items-center justify-center"
+            className="md:hidden min-w-[44px] min-h-[44px] p-[8px] text-greenDark hover:bg-greenDark/5 active:scale-95 rounded-full transition-colors cursor-pointer flex items-center justify-center"
           >
             {isMobileMenuOpen ? (
               <svg

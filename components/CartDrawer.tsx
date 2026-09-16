@@ -97,7 +97,7 @@ export default function CartDrawer() {
             type="button"
             onClick={closeDrawer}
             aria-label="Close cart"
-            className="text-[#234D32] hover:opacity-70 p-[6px] -mr-[6px] transition-opacity cursor-pointer flex items-center justify-center rounded-md"
+            className="text-[#234D32] hover:opacity-70 min-w-[44px] min-h-[44px] p-[10px] -mr-[10px] transition-opacity cursor-pointer flex items-center justify-center rounded-md"
           >
             <svg
               className="w-[20px] h-[20px] stroke-current stroke-[2]"
@@ -225,17 +225,17 @@ export default function CartDrawer() {
                     {/* Bottom row: Quantity controls & Secondary remove */}
                     <div className="flex items-center justify-between mt-[12px]">
                       {/* Quantity Stepper */}
-                      <div className="inline-flex items-center border border-[#E5DED0] rounded-[10px] bg-white h-[32px] px-[2px]">
+                      <div className="inline-flex items-center border border-[#E5DED0] rounded-[10px] bg-white h-[38px] px-[2px]">
                         <button
                           type="button"
                           onClick={() => updateQuantity(item.productId, item.quantity - 1)}
                           disabled={isLoading}
                           aria-label="Decrease quantity"
-                          className="w-[28px] h-full flex items-center justify-center text-[#234D32] font-semibold text-[15px] hover:bg-[#F8F4EA] transition-colors rounded-[8px] disabled:opacity-40 cursor-pointer"
+                          className="w-[34px] h-full flex items-center justify-center text-[#234D32] font-semibold text-[16px] hover:bg-[#F8F4EA] transition-colors rounded-[8px] disabled:opacity-40 cursor-pointer"
                         >
                           −
                         </button>
-                        <span className="w-[28px] text-center text-[13px] font-semibold text-[#234D32] select-none">
+                        <span className="w-[30px] text-center text-[13px] font-semibold text-[#234D32] select-none">
                           {item.quantity}
                         </span>
                         <button
@@ -243,7 +243,7 @@ export default function CartDrawer() {
                           onClick={() => updateQuantity(item.productId, item.quantity + 1)}
                           disabled={isLoading}
                           aria-label="Increase quantity"
-                          className="w-[28px] h-full flex items-center justify-center text-[#234D32] font-semibold text-[15px] hover:bg-[#F8F4EA] transition-colors rounded-[8px] disabled:opacity-40 cursor-pointer"
+                          className="w-[34px] h-full flex items-center justify-center text-[#234D32] font-semibold text-[16px] hover:bg-[#F8F4EA] transition-colors rounded-[8px] disabled:opacity-40 cursor-pointer"
                         >
                           +
                         </button>
@@ -255,7 +255,7 @@ export default function CartDrawer() {
                         onClick={() => removeItem(item.productId)}
                         disabled={isLoading}
                         aria-label={`Remove ${product.name} from cart`}
-                        className="text-[14px] md:text-[15px] font-medium text-[#6F6A60] hover:text-[#234D32] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#234D32] focus-visible:rounded-[4px] transition-colors duration-200 cursor-pointer disabled:opacity-40 flex items-center gap-[6px] py-[6px] px-[8px] -mr-[8px]"
+                        className="text-[14px] md:text-[15px] font-medium text-[#6F6A60] hover:text-[#234D32] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#234D32] focus-visible:rounded-[4px] transition-colors duration-200 cursor-pointer disabled:opacity-40 flex items-center gap-[6px] min-h-[38px] px-[8px] -mr-[8px]"
                       >
                         <svg
                           className="w-[17px] h-[17px] md:w-[18px] md:h-[18px] stroke-current stroke-[2] fill-none shrink-0"

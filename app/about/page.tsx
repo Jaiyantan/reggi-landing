@@ -1,3 +1,4 @@
+import AnnouncementBar from "@/components/AnnouncementBar";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
@@ -11,6 +12,7 @@ export default async function AboutPage() {
   return (
     <main className="min-h-screen bg-cream text-textDark flex flex-col justify-between">
       <StoreInitializer products={products} />
+      <AnnouncementBar />
       <Nav />
       
       <div className="flex-grow flex items-center justify-center py-[60px] px-[20px] md:py-[100px] md:px-[40px]">
