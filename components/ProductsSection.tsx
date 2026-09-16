@@ -4,17 +4,39 @@ import { useState, useEffect } from 'react';
 import { Product } from '@/data/products';
 import ProductCard from './ProductCard';
 
-type FilterType = 'ALL' | 'BOTTLES' | 'POUCHES' | 'COMBOS' | 'SPICY' | 'SWEET & AROMATIC';
+type FormatFilterType = 'ALL' | 'BOTTLES' | 'POUCHES' | 'COMBOS';
 
-const filters: FilterType[] = ['ALL', 'BOTTLES', 'POUCHES', 'COMBOS', 'SPICY', 'SWEET & AROMATIC'];
+const formatFilters: FormatFilterType[] = ['ALL', 'BOTTLES', 'POUCHES', 'COMBOS'];
+
+const curatedProductOrder = [
+  '5-flavours-jar-combo',
+  'cumin-ginger-chilli-bottle',
+  'cardamom-bottle',
+  'ginger-garlic-chilli-bottle',
+  'cardamom-cinnamon-clove-bottle',
+  'cardamom-cinnamon-ginger-bottle',
+  'cumin-ginger-chilli-pouch',
+  'ginger-garlic-chilli-pouch',
+  'cardamom-pouch',
+  'cardamom-cinnamon-cloves-pouch',
+  'cardamom-cinnamon-ginger-pouch',
+  'cumin-ginger-chilli-combo',
+  'ginger-garlic-chilli-combo',
+  'cardamom-combo',
+  'cardamom-cinnamon-cloves-combo',
+  'cardamom-cinnamon-ginger-combo',
+  'spicy-pouch-combo',
+  'sweet-pouch-combo',
+];
 
 export default function ProductsSection({ products }: { products: Product[] }) {
-  const [activeFilter, setActiveFilter] = useState<FilterType>('ALL');
+  const [activeFormat, setActiveFormat] = useState<FormatFilterType>('ALL');
 
   useEffect(() => {
     const handleSelectFilter = (e: any) => {
-      if (filters.includes(e.detail)) {
-        setActiveFilter(e.detail);
+      const value = e.detail;
+      if (formatFilters.includes(value)) {
+        setActiveFormat(value);
       }
     };
     
@@ -25,64 +47,68 @@ export default function ProductsSection({ products }: { products: Product[] }) {
   }, []);
 
   const filteredProducts = products.filter((p) => {
-    switch (activeFilter) {
-      case 'ALL':
-        return true;
-      case 'BOTTLES':
-        return p.category === 'Single Bottle';
-      case 'POUCHES':
-        return p.category === 'Pouch Pack';
-      case 'COMBOS':
-        return p.category === 'Combo';
-      case 'SPICY':
-        return p.flavour_type === 'Spicy';
-      case 'SWEET & AROMATIC':
-        return p.flavour_type === 'Sweet';
-      default:
-        return true;
-    }
+    if (activeFormat === 'BOTTLES') return p.category === 'Single Bottle';
+    if (activeFormat === 'POUCHES') return p.category === 'Pouch Pack';
+    if (activeFormat === 'COMBOS') return p.category === 'Combo';
+    return true;
+  });
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    const indexA = curatedProductOrder.indexOf(a.id);
+    const indexB = curatedProductOrder.indexOf(b.id);
+    const posA = indexA === -1 ? 999 : indexA;
+    const posB = indexB === -1 ? 999 : indexB;
+    return posA - posB;
   });
 
   return (
-    <section id="products" className="py-[50px] px-[20px] md:py-[80px] md:px-[40px] max-w-[1200px] mx-auto animate-reveal">
-      <div className="text-center mb-[32px] md:mb-[48px]">
+    <section id="products" className="pt-[36px] pb-[48px] md:pt-[52px] md:pb-[64px] px-[20px] md:px-[40px] max-w-[1200px] mx-auto animate-reveal scroll-mt-[70px]">
+      
+      {/* Header */}
+      <div className="text-center mb-[36px] md:mb-[40px]">
         <div className="inline-block text-[11px] tracking-[0.18em] uppercase text-amber font-bold mb-[12px]">
           Our Collection
         </div>
-        <h2 className="font-cormorant text-[clamp(32px,4vw,48px)] font-bold text-textDark leading-[1.2]">
+        <h2 className="font-cormorant text-[clamp(32px,4vw,46px)] font-bold text-textDark leading-[1.15]">
           Choose Your REGGI
         </h2>
-        <p className="text-[16px] text-textMid mt-[12px]">Five signature flavours. Choose how you want to enjoy REGGI.</p>
+        <p className="text-[15px] md:text-[16px] text-textMid mt-[16px] md:mt-[18px]">
+          Five signature flavours. Choose how you want to enjoy REGGI.
+        </p>
       </div>
 
-      <div className="flex overflow-x-auto hide-scrollbar gap-[10px] mb-[40px] md:mb-[48px] justify-start md:justify-center px-[4px] py-[4px] pr-[20px] md:pr-0">
-        {filters.map((filter) => (
-          <button
-            key={filter}
-            onClick={() => setActiveFilter(filter)}
-            className={`whitespace-nowrap px-[18px] py-[8px] md:py-[10px] rounded-[100px] text-[12px] md:text-[13px] font-bold tracking-[0.05em] transition-all duration-200 cursor-pointer ${
-              activeFilter === filter
-                ? 'bg-greenDark text-white shadow-md'
-                : 'bg-transparent text-textMid border border-greenDark/15 hover:border-greenDark/40 hover:text-greenDark hover:bg-greenPale/20'
-            }`}
-          >
-            {filter}
-          </button>
-        ))}
+      {/* Format Filter Row */}
+      <div className="flex items-center justify-center mb-[32px] md:mb-[36px]">
+        <div className="flex overflow-x-auto hide-scrollbar gap-[8px] justify-center px-[4px] py-[2px] snap-x snap-mandatory">
+          {formatFilters.map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActiveFormat(filter)}
+              className={`snap-start whitespace-nowrap px-[18px] md:px-[22px] h-[40px] md:h-[44px] flex items-center justify-center rounded-[100px] text-[14px] font-medium tracking-[0.02em] transition-all duration-200 cursor-pointer border ${
+                activeFormat === filter
+                  ? 'bg-greenDark text-[#F8F4EA] border-greenDark'
+                  : 'bg-transparent text-textDark/80 border-[#DED7C9] hover:border-greenDark/40 hover:text-greenDark'
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {filteredProducts.length > 0 ? (
+      {/* Product Grid */}
+      {sortedProducts.length > 0 ? (
         <div 
-          key={activeFilter}
-          className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-[28px] animate-fade-in"
+          key={activeFormat}
+          className="grid grid-cols-2 md:grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-x-[12px] gap-y-[24px] md:gap-[28px] animate-fade-in"
         >
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {sortedProducts.map((p) => (
+            <ProductCard key={p.id} product={p} />
           ))}
         </div>
       ) : (
-        <div className="text-center py-[80px] text-textMid font-medium">
-          No products found in this category.
+        <div className="text-center py-[60px] text-textMid font-medium">
+          No products found for this selection.
         </div>
       )}
 

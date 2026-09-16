@@ -65,7 +65,7 @@ export default function WhySection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className={`bg-cream py-[50px] px-[20px] md:py-[90px] md:px-[40px] overflow-hidden why-section ${isVisible ? 'is-visible' : ''}`}>
+    <section ref={sectionRef} className={`bg-cream pt-[50px] pb-[44px] px-[20px] md:pt-[90px] md:pb-[68px] md:px-[40px] overflow-hidden why-section ${isVisible ? 'is-visible' : ''}`}>
       <style>{`
         @keyframes whyRevealUp {
           0% { opacity: 0; transform: translateY(20px); }
@@ -150,7 +150,7 @@ export default function WhySection() {
         </div>
 
         {/* Conversion CTA */}
-        <div className="flex flex-col items-center text-center mt-[60px] mb-[10px] why-anim-up" style={{ animationDelay: '800ms' }}>
+        <div className="flex flex-col items-center text-center mt-[48px] md:mt-[56px] mb-0 why-anim-up" style={{ animationDelay: '800ms' }}>
           <h3 className="font-cormorant font-semibold text-[24px] md:text-[27px] text-textDark mb-[12px] md:mb-[16px]">
             Curious about REGGI?
           </h3>

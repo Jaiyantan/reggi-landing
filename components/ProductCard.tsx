@@ -34,66 +34,97 @@ export default function ProductCard({ product }: ProductCardProps) {
     }
   };
 
+  const getTasteLabel = (p: Product) => {
+    if (p.id === '5-flavours-jar-combo') return 'ALL 5 FLAVOURS';
+    if (p.flavour_type === 'Spicy') return 'SPICY';
+    if (p.flavour_type === 'Sweet') return 'SWEET & AROMATIC';
+    return null;
+  };
+
+  const tasteLabel = getTasteLabel(product);
 
   return (
     <div 
       id={`product-${product.id}`}
-      className="group bg-white rounded-[22px] overflow-hidden border border-greenDark/10 flex flex-col shadow-card transition-all duration-300 ease-out md:hover:-translate-y-[6px] md:hover:shadow-card-hover scroll-mt-[100px]"
+      className="group bg-white rounded-[16px] md:rounded-[20px] overflow-hidden border border-black/5 flex flex-col shadow-sm transition-all duration-300 ease-out md:hover:-translate-y-[2px] md:hover:shadow-md scroll-mt-[100px]"
     >
-      <div className="relative overflow-hidden bg-cream aspect-[4/5] md:aspect-[3/4] rounded-t-[20px] m-[6px] rounded-[16px]">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-contain p-4 transition-transform duration-500 ease-out md:group-hover:scale-105"
-        />
-
-      </div>
-
-      <div className="p-[12px_16px_16px] flex-1 flex flex-col justify-end">
-        {product.flavour_type && (
-          <div className="mb-[6px] flex">
-            <span className={`text-[10px] font-bold px-[8px] py-[3px] rounded-full tracking-[0.06em] uppercase ${
-              product.flavour_type === 'Spicy' 
-                ? 'bg-redAccent/10 text-redAccent' 
-                : product.flavour_type === 'Sweet'
-                ? 'bg-amber/15 text-[#B56E25]'
-                : 'bg-greenDark/10 text-greenDark'
-            }`}>
-              {product.flavour_type}
+      {/* 1. PRODUCT IMAGE */}
+      <div className="relative overflow-hidden bg-[#F8F4EA] aspect-[4/5] rounded-t-[16px] md:rounded-t-[20px] border-b border-black/5">
+        
+        {/* ONE Subtle Badge Maximum */}
+        {product.tag && (
+          <div className="absolute top-[12px] left-[12px] z-10">
+            <span className="inline-block bg-white text-greenDark text-[9px] md:text-[10px] font-bold tracking-[0.08em] px-[10px] py-[4px] rounded-full uppercase shadow-sm border border-black/5">
+              {product.tag}
             </span>
           </div>
         )}
-        <h3 className="font-cormorant text-[18px] md:text-[20px] font-bold text-[#121212] leading-[1.2] mb-[4px] truncate">
-          {product.name}
-        </h3>
-        <p className="text-[12px] md:text-[13px] text-textDark font-medium leading-[1.4] mb-[12px] line-clamp-2">
-          {product.description}
-        </p>
 
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-contain p-[16px] md:p-[24px] transition-transform duration-500 ease-out md:group-hover:scale-[1.03]"
+        />
+      </div>
 
-        <div className="flex items-center justify-between border-t border-creamDark pt-[12px]">
+      {/* CARD CONTENT */}
+      <div className="p-[16px] md:p-[20px] flex-1 flex flex-col justify-between bg-white">
+        
+        <div>
+          {/* 2. SMALL TASTE LABEL */}
+          {tasteLabel && (
+            <div className="mb-[6px]">
+              <span 
+                className={`text-[10px] md:text-[11px] font-bold tracking-[0.12em] uppercase ${
+                  product.flavour_type === 'Spicy' 
+                    ? 'text-[#C4422B]' 
+                    : product.flavour_type === 'Sweet'
+                    ? 'text-[#B56E25]'
+                    : 'text-greenDark'
+                }`}
+              >
+                {tasteLabel}
+              </span>
+            </div>
+          )}
+          
+          {/* 3. PRODUCT NAME */}
+          <h3 className="font-cormorant text-[20px] md:text-[24px] font-bold text-[#121212] leading-[1.15] mb-[6px]">
+            {product.name}
+          </h3>
+          
+          {/* 4. SHORT FLAVOUR-FOCUSED DESCRIPTION */}
+          <p className="text-[13px] md:text-[14px] text-textMid leading-[1.5] mb-[16px] line-clamp-2">
+            {product.description}
+          </p>
+        </div>
+
+        {/* BOTTOM ROW: PRICE & ADD TO CART */}
+        <div className="flex items-end justify-between pt-[16px] border-t border-black/5 mt-auto">
+          
+          {/* 5. PRICE */}
           <div className="flex flex-col">
             {product.priceOriginal && (
-              <span className="text-[12px] text-textLight line-through">
+              <span className="text-[11px] text-textMid/60 line-through mb-[2px]">
                 {product.priceOriginal}
               </span>
             )}
-            <span className="text-[22px] font-bold text-greenDark">
-              {product.priceCurrent}{' '}
-              <span className="text-[13px] font-normal text-textMid">incl. GST</span>
+            <span className="text-[18px] md:text-[20px] font-bold text-greenDark leading-none">
+              {product.priceCurrent}
             </span>
           </div>
 
+          {/* 6. ADD TO CART */}
           <button
             type="button"
             onClick={handleAddToCart}
             disabled={isAdding}
-            className={`flex items-center gap-[6px] px-[14px] py-[8px] md:px-[16px] md:py-[10px] rounded-[12px] text-[12px] md:text-[13px] font-bold cursor-pointer transition-all duration-200 ease-out active:scale-95 whitespace-nowrap shadow-md bg-gradient-to-b ${
+            className={`flex items-center justify-center min-w-[100px] px-[16px] py-[10px] md:py-[12px] rounded-[100px] text-[12px] md:text-[13px] font-bold cursor-pointer transition-all duration-200 ease-out whitespace-nowrap border ${
               hasError 
-                ? 'from-redAccent to-[#990000] text-white scale-105'
+                ? 'bg-redAccent border-redAccent text-white'
                 : isAdded
-                ? 'from-amber to-[#B56E25] text-white scale-105'
-                : 'from-greenMid to-greenDark text-white hover:scale-[1.03] hover:shadow-order-btn-hover'
+                ? 'bg-amber border-amber text-white'
+                : 'bg-transparent border-greenDark text-greenDark hover:bg-greenDark hover:text-white'
             } ${isAdding ? 'opacity-70 cursor-wait' : ''}`}
           >
             {isAdding ? 'Adding...' : hasError ? 'Error!' : isAdded ? 'Added ✓' : 'Add to Cart'}
