@@ -62,11 +62,60 @@ export default function FinalCtaSection() {
           animation: ctaRevealUp 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         
+        @keyframes textWipeLtr {
+          0%, 30% {
+            -webkit-mask-position: 100% 0;
+            mask-position: 100% 0;
+          }
+          55% {
+            -webkit-mask-position: 50% 0;
+            mask-position: 50% 0;
+          }
+          80%, 100% {
+            -webkit-mask-position: 0% 0;
+            mask-position: 0% 0;
+          }
+        }
+        
+        .text-wipe-loop {
+          display: inline-block;
+          max-width: 100%;
+          -webkit-mask-image: linear-gradient(
+            90deg,
+            #000 0%,
+            #000 25%,
+            rgba(0, 0, 0, 0) 37%,
+            rgba(0, 0, 0, 0) 63%,
+            #000 75%,
+            #000 100%
+          );
+          mask-image: linear-gradient(
+            90deg,
+            #000 0%,
+            #000 25%,
+            rgba(0, 0, 0, 0) 37%,
+            rgba(0, 0, 0, 0) 63%,
+            #000 75%,
+            #000 100%
+          );
+          -webkit-mask-size: 400% 100%;
+          mask-size: 400% 100%;
+          -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+          animation: textWipeLtr 6s cubic-bezier(0.45, 0.05, 0.2, 0.95) infinite;
+          will-change: mask-position, -webkit-mask-position;
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .cta-anim-up {
             animation: none !important;
             opacity: 1 !important;
             transform: none !important;
+          }
+          .text-wipe-loop {
+            animation: none !important;
+            -webkit-mask-image: none !important;
+            mask-image: none !important;
           }
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -79,7 +128,8 @@ export default function FinalCtaSection() {
           {/* Content Column (5 columns on desktop, full width on mobile) */}
           <div className="w-full md:col-span-5 z-10 flex flex-col items-center md:items-start text-center md:text-left">
             <h2 className="cta-anim-up font-cormorant text-[clamp(40px,5vw,56px)] font-bold text-textDark leading-[1.2] md:mb-[20px] tracking-tight" style={{ animationDelay: '0ms' }}>
-              Find Your Favourite REGGI
+              Find Your Favourite{' '}
+              <span className="text-wipe-loop text-redAccent">REGGI</span>
             </h2>
             
             <p className="cta-anim-up text-[16px] md:text-[18px] text-textMid leading-[1.6] md:mb-[40px] max-w-[480px] mx-auto md:mx-0" style={{ animationDelay: '100ms' }}>

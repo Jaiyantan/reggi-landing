@@ -23,6 +23,8 @@ interface CartState {
   totalItems: number;
   totalPrice: number;
   isLoading: boolean;
+  justAdded: boolean;
+  lastAddedProductId: string | null;
   
   // Actions
   fetchCart: () => Promise<void>;
@@ -30,9 +32,10 @@ interface CartState {
   removeItem: (productId: string) => Promise<void>;
   updateQuantity: (productId: string, quantity: number) => Promise<void>;
   clearCart: () => Promise<void>;
-  openDrawer: () => void;
+  openDrawer: (options?: { justAdded?: boolean; productId?: string }) => void;
   closeDrawer: () => void;
   toggleDrawer: () => void;
+  setJustAdded: (val: boolean) => void;
 }
 
 export const useCartStore = create<CartState>()(
@@ -42,6 +45,8 @@ export const useCartStore = create<CartState>()(
     totalItems: 0,
     totalPrice: 0,
     isLoading: false,
+    justAdded: false,
+    lastAddedProductId: null,
 
     fetchCart: async () => {
       set({ isLoading: true });
@@ -77,6 +82,12 @@ export const useCartStore = create<CartState>()(
         }
         
         await get().fetchCart();
+        set({
+          isDrawerOpen: true,
+          justAdded: true,
+          lastAddedProductId: productId,
+          isLoading: false,
+        });
       } catch (error) {
         console.error('Failed to add item', error);
         set({ isLoading: false });
@@ -126,8 +137,13 @@ export const useCartStore = create<CartState>()(
       }
     },
 
-    openDrawer: () => set({ isDrawerOpen: true }),
-    closeDrawer: () => set({ isDrawerOpen: false }),
-    toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen })),
+    openDrawer: (options) => set({
+      isDrawerOpen: true,
+      justAdded: options?.justAdded ?? false,
+      lastAddedProductId: options?.productId ?? null,
+    }),
+    closeDrawer: () => set({ isDrawerOpen: false, justAdded: false }),
+    toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen, justAdded: false })),
+    setJustAdded: (val: boolean) => set({ justAdded: val }),
   })
 );

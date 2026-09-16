@@ -48,17 +48,12 @@ export default function EnjoySection() {
       observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
-            // Trigger animation when at least 30% is visible (using 0.25 as a safe float margin)
             setIsValuePropsVisible(true);
           } else if (!entry.isIntersecting) {
-            // Only reset the animation when the section is COMPLETELY off-screen (0%)
             setIsValuePropsVisible(false);
           }
         },
-        {
-          threshold: [0, 0.3],
-          rootMargin: '0px'
-        }
+        { threshold: [0, 0.3], rootMargin: '0px' }
       );
 
       if (valuePropsRef.current) {
@@ -74,8 +69,12 @@ export default function EnjoySection() {
 
   return (
     <section className="pt-[10px] pb-[50px] md:pt-[20px] md:pb-[90px] animate-reveal overflow-hidden">
+      {/* Header Container */}
       <div className="max-w-[1200px] mx-auto px-[20px] md:px-[40px]">
         <div className="text-center mb-[48px] md:mb-[64px]">
+          <div className="inline-block text-[11px] tracking-[0.18em] uppercase text-amber font-bold mb-[12px]">
+            ENJOY REGGI YOUR WAY
+          </div>
           <h2 className="font-cormorant text-[clamp(32px,4vw,48px)] font-bold text-textDark leading-[1.2]">
             Enjoy REGGI Your Way
           </h2>
@@ -85,18 +84,22 @@ export default function EnjoySection() {
         </div>
       </div>
 
-      {/* Use Case Gallery - Full Bleed Auto-Marquee */}
+      {/* Use Case Gallery - Slower Infinite Marquee */}
       <div className="w-full relative mt-[20px]">
         <style>{`
           @keyframes autoMarquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
           }
           .custom-marquee-track {
-            animation: autoMarquee 32s linear infinite;
+            animation: autoMarquee 54s linear infinite;
+            will-change: transform;
           }
           .custom-marquee-wrapper {
             overflow: hidden;
+          }
+          .custom-marquee-wrapper:hover .custom-marquee-track {
+            animation-play-state: paused;
           }
           
           @media (prefers-reduced-motion: reduce) {
@@ -117,7 +120,7 @@ export default function EnjoySection() {
               {useCases.map((useCase, index) => (
                 <div
                   key={`set1-${index}`}
-                  className="min-w-[260px] w-[80vw] md:w-[340px] flex-shrink-0 bg-white rounded-card overflow-hidden shadow-card hover:shadow-card-hover hover:scale-[1.06] hover:z-10 transition-all duration-[250ms] ease-out flex flex-col cursor-default group relative"
+                  className="min-w-[260px] w-[80vw] md:w-[340px] flex-shrink-0 bg-white rounded-card overflow-hidden shadow-card hover:shadow-card-hover hover:scale-[1.04] hover:z-10 transition-all duration-[250ms] ease-out flex flex-col cursor-default group relative"
                 >
                   <div className="w-full aspect-[5/4] bg-[#F8F6F0] relative overflow-hidden">
                     <Image
@@ -130,7 +133,9 @@ export default function EnjoySection() {
                     />
                   </div>
                   <div className="p-[14px] md:p-[16px] text-center flex-grow flex flex-col items-center justify-center">
-                    <h3 className="font-dmSans font-medium text-[15px] md:text-[16px] text-textDark leading-[1.3]">{useCase.title}</h3>
+                    <h3 className="font-dmSans font-medium text-[15px] md:text-[16px] text-textDark leading-[1.3]">
+                      {useCase.title}
+                    </h3>
                     <p className="text-[13px] text-textMid leading-[1.4] mt-[4px] md:mt-[6px] max-w-[220px]">
                       {useCase.desc}
                     </p>
@@ -144,7 +149,7 @@ export default function EnjoySection() {
               {useCases.map((useCase, index) => (
                 <div
                   key={`set2-${index}`}
-                  className="min-w-[260px] w-[80vw] md:w-[340px] flex-shrink-0 bg-white rounded-card overflow-hidden shadow-card hover:shadow-card-hover hover:scale-[1.06] hover:z-10 transition-all duration-[250ms] ease-out flex flex-col cursor-default group relative"
+                  className="min-w-[260px] w-[80vw] md:w-[340px] flex-shrink-0 bg-white rounded-card overflow-hidden shadow-card hover:shadow-card-hover hover:scale-[1.04] hover:z-10 transition-all duration-[250ms] ease-out flex flex-col cursor-default group relative"
                 >
                   <div className="w-full aspect-[5/4] bg-[#F8F6F0] relative overflow-hidden">
                     <Image
@@ -157,7 +162,9 @@ export default function EnjoySection() {
                     />
                   </div>
                   <div className="p-[14px] md:p-[16px] text-center flex-grow flex flex-col items-center justify-center">
-                    <h3 className="font-dmSans font-medium text-[15px] md:text-[16px] text-textDark leading-[1.3]">{useCase.title}</h3>
+                    <h3 className="font-dmSans font-medium text-[15px] md:text-[16px] text-textDark leading-[1.3]">
+                      {useCase.title}
+                    </h3>
                     <p className="text-[13px] text-textMid leading-[1.4] mt-[4px] md:mt-[6px] max-w-[220px]">
                       {useCase.desc}
                     </p>

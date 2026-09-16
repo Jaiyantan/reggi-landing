@@ -46,34 +46,24 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div 
       id={`product-${product.id}`}
-      className="group bg-white rounded-[16px] md:rounded-[20px] overflow-hidden border border-black/5 flex flex-col shadow-sm transition-all duration-300 ease-out md:hover:-translate-y-[2px] md:hover:shadow-md scroll-mt-[100px]"
+      className="group bg-white rounded-[16px] md:rounded-[20px] overflow-hidden border border-[rgba(165,55,48,0.28)] hover:border-[rgba(165,55,48,0.42)] flex flex-col shadow-sm transition-colors duration-200 scroll-mt-[100px]"
     >
       {/* 1. PRODUCT IMAGE */}
-      <div className="relative overflow-hidden bg-[#F8F4EA] aspect-[4/5] rounded-t-[16px] md:rounded-t-[20px] border-b border-black/5">
-        
-        {/* ONE Subtle Badge Maximum */}
-        {product.tag && (
-          <div className="absolute top-[12px] left-[12px] z-10">
-            <span className="inline-block bg-white text-greenDark text-[9px] md:text-[10px] font-bold tracking-[0.08em] px-[10px] py-[4px] rounded-full uppercase shadow-sm border border-black/5">
-              {product.tag}
-            </span>
-          </div>
-        )}
-
+      <div className="relative overflow-hidden bg-[#F8F4EA] aspect-[4/5] max-h-[220px] sm:max-h-[240px] md:max-h-[250px] rounded-t-[16px] md:rounded-t-[20px] border-b border-black/5 flex items-center justify-center">
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-contain p-[16px] md:p-[24px] transition-transform duration-500 ease-out md:group-hover:scale-[1.03]"
+          className="w-full h-full object-contain p-[10px] md:p-[14px]"
         />
       </div>
 
       {/* CARD CONTENT */}
-      <div className="p-[16px] md:p-[20px] flex-1 flex flex-col justify-between bg-white">
+      <div className="p-[14px] md:p-[16px] flex-1 flex flex-col justify-between bg-white">
         
         <div>
           {/* 2. SMALL TASTE LABEL */}
           {tasteLabel && (
-            <div className="mb-[6px]">
+            <div className="mb-[4px]">
               <span 
                 className={`text-[10px] md:text-[11px] font-bold tracking-[0.12em] uppercase ${
                   product.flavour_type === 'Spicy' 
@@ -89,27 +79,27 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
           
           {/* 3. PRODUCT NAME */}
-          <h3 className="font-cormorant text-[20px] md:text-[24px] font-bold text-[#121212] leading-[1.15] mb-[6px]">
+          <h3 className="font-cormorant text-[18px] md:text-[21px] font-bold text-[#121212] leading-[1.15] mb-[4px]">
             {product.name}
           </h3>
           
           {/* 4. SHORT FLAVOUR-FOCUSED DESCRIPTION */}
-          <p className="text-[13px] md:text-[14px] text-textMid leading-[1.5] mb-[16px] line-clamp-2">
+          <p className="text-[12px] md:text-[13px] text-textMid leading-[1.4] mb-[12px] line-clamp-2">
             {product.description}
           </p>
         </div>
 
         {/* BOTTOM ROW: PRICE & ADD TO CART */}
-        <div className="flex items-end justify-between pt-[16px] border-t border-black/5 mt-auto">
+        <div className="flex items-end justify-between pt-[12px] border-t border-black/5 mt-auto">
           
           {/* 5. PRICE */}
           <div className="flex flex-col">
             {product.priceOriginal && (
-              <span className="text-[11px] text-textMid/60 line-through mb-[2px]">
+              <span className="text-[11px] text-textMid/60 line-through mb-[1px]">
                 {product.priceOriginal}
               </span>
             )}
-            <span className="text-[18px] md:text-[20px] font-bold text-greenDark leading-none">
+            <span className="text-[17px] md:text-[19px] font-bold text-greenDark leading-none">
               {product.priceCurrent}
             </span>
           </div>
@@ -119,7 +109,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             type="button"
             onClick={handleAddToCart}
             disabled={isAdding}
-            className={`flex items-center justify-center min-w-[100px] px-[16px] py-[10px] md:py-[12px] rounded-[100px] text-[12px] md:text-[13px] font-bold cursor-pointer transition-all duration-200 ease-out whitespace-nowrap border ${
+            className={`flex items-center justify-center min-w-[90px] px-[14px] py-[8px] md:py-[10px] rounded-[100px] text-[12px] font-bold cursor-pointer transition-all duration-200 ease-out whitespace-nowrap border ${
               hasError 
                 ? 'bg-redAccent border-redAccent text-white'
                 : isAdded

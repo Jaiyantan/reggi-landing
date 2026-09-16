@@ -64,13 +64,69 @@ export default function ProductsSection({ products }: { products: Product[] }) {
   return (
     <section id="products" className="pt-[36px] pb-[48px] md:pt-[52px] md:pb-[64px] px-[20px] md:px-[40px] max-w-[1200px] mx-auto animate-reveal scroll-mt-[70px]">
       
+      <style>{`
+        @keyframes textWipeLtr {
+          0%, 30% {
+            -webkit-mask-position: 100% 0;
+            mask-position: 100% 0;
+          }
+          55% {
+            -webkit-mask-position: 50% 0;
+            mask-position: 50% 0;
+          }
+          80%, 100% {
+            -webkit-mask-position: 0% 0;
+            mask-position: 0% 0;
+          }
+        }
+        
+        .text-wipe-loop {
+          display: inline-block;
+          max-width: 100%;
+          -webkit-mask-image: linear-gradient(
+            90deg,
+            #000 0%,
+            #000 25%,
+            rgba(0, 0, 0, 0) 37%,
+            rgba(0, 0, 0, 0) 63%,
+            #000 75%,
+            #000 100%
+          );
+          mask-image: linear-gradient(
+            90deg,
+            #000 0%,
+            #000 25%,
+            rgba(0, 0, 0, 0) 37%,
+            rgba(0, 0, 0, 0) 63%,
+            #000 75%,
+            #000 100%
+          );
+          -webkit-mask-size: 400% 100%;
+          mask-size: 400% 100%;
+          -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+          animation: textWipeLtr 6s cubic-bezier(0.45, 0.05, 0.2, 0.95) infinite;
+          will-change: mask-position, -webkit-mask-position;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .text-wipe-loop {
+            animation: none !important;
+            -webkit-mask-image: none !important;
+            mask-image: none !important;
+          }
+        }
+      `}</style>
+      
       {/* Header */}
       <div className="text-center mb-[36px] md:mb-[40px]">
         <div className="inline-block text-[11px] tracking-[0.18em] uppercase text-amber font-bold mb-[12px]">
           Our Collection
         </div>
         <h2 className="font-cormorant text-[clamp(32px,4vw,46px)] font-bold text-textDark leading-[1.15]">
-          Choose Your REGGI
+          <span className="text-wipe-loop">
+            Taste the Goodness, Feel the Difference!
+          </span>
         </h2>
         <p className="text-[15px] md:text-[16px] text-textMid mt-[16px] md:mt-[18px]">
           Five signature flavours. Choose how you want to enjoy REGGI.

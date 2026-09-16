@@ -15,6 +15,8 @@ export default function CartDrawer() {
   const removeItem = useCartStore((state) => state.removeItem);
   const totalPrice = useCartStore((state) => state.totalPrice);
   const isLoading = useCartStore((state) => state.isLoading);
+  const lastAddedProductId = useCartStore((state) => state.lastAddedProductId);
+  const justAdded = useCartStore((state) => state.justAdded);
   const router = useRouter();
 
   useEffect(() => {
@@ -53,6 +55,14 @@ export default function CartDrawer() {
       }
     }, 150);
   };
+
+  const displayItems = lastAddedProductId
+    ? [...items].sort((a, b) => {
+        if (a.productId === lastAddedProductId) return -1;
+        if (b.productId === lastAddedProductId) return 1;
+        return 0;
+      })
+    : items;
 
   if (!mounted || !isDrawerOpen) return null;
 
@@ -101,6 +111,14 @@ export default function CartDrawer() {
             </svg>
           </button>
         </div>
+
+        {/* Added to Cart Confirmation Banner */}
+        {justAdded && (
+          <div className="bg-[#EBF3ED] text-[#234D32] border-b border-[#D4E5D8] px-[24px] py-[10px] flex items-center gap-[8px] shrink-0 animate-in fade-in duration-200">
+            <span className="text-[14px] font-bold text-[#234D32]">✓</span>
+            <span className="text-[13px] font-medium tracking-[0.01em]">Added to your cart</span>
+          </div>
+        )}
 
         {/* Content Body */}
         {items.length === 0 ? (
@@ -152,7 +170,7 @@ export default function CartDrawer() {
         ) : (
           /* Filled Cart State - Refined items list with clean dividers */
           <div className="flex-1 overflow-y-auto px-[24px] py-[12px] divide-y divide-[#E5DED0]">
-            {items.map((item) => {
+            {displayItems.map((item) => {
               const product = item.product;
               if (!product) return null;
 
@@ -237,10 +255,10 @@ export default function CartDrawer() {
                         onClick={() => removeItem(item.productId)}
                         disabled={isLoading}
                         aria-label={`Remove ${product.name} from cart`}
-                        className="text-[12px] text-[#8C8273] hover:text-[#C84B31] transition-colors cursor-pointer disabled:opacity-40 flex items-center gap-[4px] py-[4px] px-[6px] -mr-[6px]"
+                        className="text-[14px] md:text-[15px] font-medium text-[#6F6A60] hover:text-[#234D32] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#234D32] focus-visible:rounded-[4px] transition-colors duration-200 cursor-pointer disabled:opacity-40 flex items-center gap-[6px] py-[6px] px-[8px] -mr-[8px]"
                       >
                         <svg
-                          className="w-[14px] h-[14px] stroke-current stroke-[1.8] fill-none"
+                          className="w-[17px] h-[17px] md:w-[18px] md:h-[18px] stroke-current stroke-[2] fill-none shrink-0"
                           viewBox="0 0 24 24"
                         >
                           <polyline points="3 6 5 6 21 6" />
@@ -260,10 +278,10 @@ export default function CartDrawer() {
         {items.length > 0 && (
           <div className="border-t border-[#E5DED0] bg-[#F8F4EA] px-[24px] py-[20px] shrink-0 space-y-[14px]">
             {/* Subtotal & accurate store shipping info */}
-            <div className="space-y-[8px]">
+            <div className="space-y-[6px]">
               <div className="flex items-center justify-between text-[14px] text-[#5C5346]">
-                <span>Subtotal</span>
-                <span className="font-cormorant font-bold text-[22px] text-[#234D32] leading-none">
+                <span className="font-medium">Subtotal</span>
+                <span className="font-cormorant font-bold text-[22px] md:text-[24px] text-[#234D32] leading-none">
                   ₹{totalPrice}
                 </span>
               </div>
@@ -272,26 +290,35 @@ export default function CartDrawer() {
                 <span>Shipping</span>
                 <span className="text-[#234D32] font-semibold">Free Delivery</span>
               </div>
-
-              <p className="text-[11px] text-[#8C8273]">
-                Including GST • Free shipping across India
-              </p>
             </div>
 
-            {/* Primary Checkout CTA */}
-            <button
-              type="button"
-              onClick={() => {
-                closeDrawer();
-                router.push('/checkout');
-              }}
-              className="w-full bg-[#234D32] text-[#F8F4EA] hover:bg-[#1B3C27] active:scale-[0.99] transition-all duration-200 py-[15px] px-[24px] rounded-[16px] text-[14px] font-semibold tracking-[0.06em] cursor-pointer flex items-center justify-center gap-[8px] shadow-sm"
-            >
-              <span>PROCEED TO CHECKOUT</span>
-              <span className="text-[16px] leading-none">→</span>
-            </button>
+            {/* Action Buttons: 1. Continue Shopping (prominent primary nav), 2. Proceed to Checkout */}
+            <div className="space-y-[11px] pt-[2px]">
+              {/* 1. CONTINUE SHOPPING */}
+              <button
+                type="button"
+                onClick={closeDrawer}
+                className="w-full h-[54px] md:h-[56px] bg-[#F2F6F3] hover:bg-[#E5EFE7] text-[#234D32] border border-[#234D32] rounded-[14px] text-[15px] md:text-[16px] font-semibold tracking-[0.02em] cursor-pointer flex items-center justify-center gap-[8px] transition-all duration-200 active:scale-[0.99]"
+              >
+                <span className="text-[17px] leading-none">←</span>
+                <span>Continue Shopping</span>
+              </button>
 
-            {/* Trust Line */}
+              {/* 2. PROCEED TO CHECKOUT */}
+              <button
+                type="button"
+                onClick={() => {
+                  closeDrawer();
+                  router.push('/checkout');
+                }}
+                className="w-full h-[54px] md:h-[56px] bg-[#234D32] hover:bg-[#1B3C27] text-[#F8F4EA] rounded-[14px] text-[15px] md:text-[16px] font-semibold tracking-[0.02em] cursor-pointer flex items-center justify-center gap-[8px] shadow-sm transition-all duration-200 active:scale-[0.99]"
+              >
+                <span>Proceed to Checkout</span>
+                <span className="text-[17px] leading-none">→</span>
+              </button>
+            </div>
+
+            {/* Subtle Trust Line */}
             <div className="flex items-center justify-center gap-[6px] text-[12px] text-[#7A7265] pt-[2px]">
               <svg
                 className="w-[13px] h-[13px] stroke-current stroke-[2] fill-none"
