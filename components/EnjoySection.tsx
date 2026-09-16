@@ -258,8 +258,8 @@ export default function EnjoySection() {
                   className="flex flex-col items-center text-center group p-[10px] md:hover:-translate-y-2 transition-transform duration-300 ease-out"
                 >
                   <div className="value-anim-scale" style={{ animationDelay: `${baseDelay}ms` }}>
-                    <div className="w-[96px] h-[96px] rounded-full bg-[#365640] flex items-center justify-center mb-[20px] text-[#D6A14D] overflow-hidden shadow-sm md:group-hover:scale-105 transition-transform duration-300 ease-out">
-                      <Image src={prop.imageSrc} alt={prop.title} width={96} height={96} className="w-full h-full object-cover" />
+                    <div className="w-[114px] h-[114px] md:w-[130px] md:h-[130px] rounded-full bg-[#365640] flex items-center justify-center mb-[20px] text-[#D6A14D] overflow-hidden shadow-sm md:group-hover:scale-105 transition-transform duration-300 ease-out">
+                      <Image src={prop.imageSrc} alt={prop.title} width={130} height={130} className="w-full h-full object-cover" />
                     </div>
                   </div>
 
