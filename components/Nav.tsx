@@ -1,9 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useCartStore } from '@/store/cartStore';
 
 export default function Nav() {
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<'why' | 'enjoy' | 'flavours' | null>(null);
@@ -75,6 +78,11 @@ export default function Nav() {
   const scrollToSection = (target: 'why' | 'enjoy' | 'flavours') => {
     setIsMobileMenuOpen(false);
 
+    if (pathname !== '/') {
+      window.location.href = `/#${target === 'flavours' ? 'products' : target}`;
+      return;
+    }
+
     let targetEl: HTMLElement | null = null;
     if (target === 'why') {
       targetEl = (document.querySelector('.why-section') as HTMLElement) || document.getElementById('why');
@@ -106,12 +114,13 @@ export default function Nav() {
       <div className="max-w-[1400px] mx-auto px-[12px] sm:px-[24px] md:px-[40px] h-[64px] sm:h-[68px] md:h-[74px] flex items-center justify-between gap-[8px] sm:gap-[16px]">
         {/* Left: REGGI Logo */}
         <div className="flex items-center shrink-0">
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
+          <Link
+            href="/"
+            onClick={() => {
               setIsMobileMenuOpen(false);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              if (pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
             }}
             className="flex items-center gap-[10px] no-underline cursor-pointer"
             aria-label="REGGI Home"
@@ -121,7 +130,7 @@ export default function Nav() {
               alt="REGGI Logo"
               className="h-[30px] sm:h-[36px] md:h-[42px] object-contain"
             />
-          </a>
+          </Link>
         </div>
 
         {/* Center: Sleek Segmented Navigation Dock (Harmonized Brand Red) */}
@@ -155,19 +164,29 @@ export default function Nav() {
             How to Enjoy
           </a>
           <a
-            href="#products"
+            href="/#products"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('flavours');
             }}
             className={`px-[18px] lg:px-[22px] py-[7px] rounded-full text-[13.5px] lg:text-[14px] tracking-[0.01em] transition-all duration-180 no-underline cursor-pointer select-none ${
-              activeSection === 'flavours'
+              activeSection === 'flavours' && pathname === '/'
                 ? 'bg-white text-[#96151D] font-bold shadow-[0_2px_6px_rgba(150,21,29,0.12)] border border-[#E2C8C2]'
                 : 'text-[#96151D] font-semibold hover:bg-white/70'
             }`}
           >
             Our Flavours
           </a>
+          <Link
+            href="/contact"
+            className={`px-[18px] lg:px-[22px] py-[7px] rounded-full text-[13.5px] lg:text-[14px] tracking-[0.01em] transition-all duration-180 no-underline cursor-pointer select-none ${
+              pathname === '/contact'
+                ? 'bg-white text-[#96151D] font-bold shadow-[0_2px_6px_rgba(150,21,29,0.12)] border border-[#E2C8C2]'
+                : 'text-[#96151D] font-semibold hover:bg-white/70'
+            }`}
+          >
+            Contact
+          </Link>
         </div>
 
         {/* Right: Cart, SHOP REGGI, and Mobile Hamburger */}
@@ -205,8 +224,11 @@ export default function Nav() {
 
           {/* SHOP REGGI Button */}
           <a
-            href="#products"
+            href="/#products"
             onClick={(e) => {
+              if (pathname !== '/') {
+                return;
+              }
               e.preventDefault();
               setIsMobileMenuOpen(false);
               window.dispatchEvent(new CustomEvent('selectProductFilter', { detail: 'ALL' }));
@@ -297,13 +319,13 @@ export default function Nav() {
               <span className="text-[13px] text-[#96151D]/60 font-bold">→</span>
             </a>
             <a
-              href="#products"
+              href="/#products"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection('flavours');
               }}
               className={`py-[12px] px-[16px] text-[15px] font-semibold rounded-[12px] transition-all duration-150 flex items-center justify-between no-underline ${
-                activeSection === 'flavours'
+                activeSection === 'flavours' && pathname === '/'
                   ? 'bg-white text-[#96151D] font-bold shadow-[0_1px_3px_rgba(150,21,29,0.1)] border border-[#E2C8C2]'
                   : 'text-[#96151D] hover:bg-white/70'
               }`}
@@ -311,6 +333,18 @@ export default function Nav() {
               <span>Our Flavours</span>
               <span className="text-[13px] text-[#96151D]/60 font-bold">→</span>
             </a>
+            <Link
+              href="/contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`py-[12px] px-[16px] text-[15px] font-semibold rounded-[12px] transition-all duration-150 flex items-center justify-between no-underline ${
+                pathname === '/contact'
+                  ? 'bg-white text-[#96151D] font-bold shadow-[0_1px_3px_rgba(150,21,29,0.1)] border border-[#E2C8C2]'
+                  : 'text-[#96151D] hover:bg-white/70'
+              }`}
+            >
+              <span>Contact</span>
+              <span className="text-[13px] text-[#96151D]/60 font-bold">→</span>
+            </Link>
           </div>
         </div>
       )}

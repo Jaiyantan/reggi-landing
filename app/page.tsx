@@ -10,6 +10,7 @@ import ProductsSection from "@/components/ProductsSection";
 import JujubeSection from "@/components/JujubeSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FinalCtaSection from "@/components/FinalCtaSection";
+import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
 
 import CartDrawer from "@/components/CartDrawer";
@@ -29,6 +30,7 @@ export default async function Home() {
       <TestimonialsSection />
       <JujubeSection />
       <FinalCtaSection />
+      <FaqSection />
       <Footer />
 
       <CartDrawer />

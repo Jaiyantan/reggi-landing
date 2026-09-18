@@ -5,8 +5,10 @@ import { Product } from '@/data/products';
 import ProductCard from './ProductCard';
 
 type FormatFilterType = 'ALL' | 'BOTTLES' | 'POUCHES' | 'COMBOS';
+type TasteFilterType = 'Sweet' | 'Spicy' | null;
 
 const formatFilters: FormatFilterType[] = ['ALL', 'BOTTLES', 'POUCHES', 'COMBOS'];
+const tasteFilters: Array<'Sweet' | 'Spicy'> = ['Sweet', 'Spicy'];
 
 const curatedProductOrder = [
   '5-flavours-jar-combo',
@@ -31,6 +33,7 @@ const curatedProductOrder = [
 
 export default function ProductsSection({ products }: { products: Product[] }) {
   const [activeFormat, setActiveFormat] = useState<FormatFilterType>('ALL');
+  const [activeTaste, setActiveTaste] = useState<TasteFilterType>(null);
 
   useEffect(() => {
     const handleSelectFilter = (e: any) => {
@@ -46,10 +49,23 @@ export default function ProductsSection({ products }: { products: Product[] }) {
     };
   }, []);
 
+  const handleTasteToggle = (taste: 'Sweet' | 'Spicy') => {
+    setActiveTaste((prev) => (prev === taste ? null : taste));
+  };
+
   const filteredProducts = products.filter((p) => {
-    if (activeFormat === 'BOTTLES') return p.category === 'Single Bottle';
-    if (activeFormat === 'POUCHES') return p.category === 'Pouch Pack';
-    if (activeFormat === 'COMBOS') return p.category === 'Combo';
+    // 1. Packaging format filter
+    if (activeFormat === 'BOTTLES' && p.category !== 'Single Bottle') return false;
+    if (activeFormat === 'POUCHES' && p.category !== 'Pouch Pack') return false;
+    if (activeFormat === 'COMBOS' && p.category !== 'Combo') return false;
+
+    // 2. Taste profile filter
+    if (activeTaste) {
+      // 5 Flavours Jar Combo / Assorted satisfies both Sweet and Spicy
+      if (p.flavour_type === 'Assorted' || p.id === '5-flavours-jar-combo') return true;
+      return p.flavour_type === activeTaste;
+    }
+
     return true;
   });
 
@@ -119,7 +135,7 @@ export default function ProductsSection({ products }: { products: Product[] }) {
       `}</style>
       
       {/* Header */}
-      <div className="text-center mb-[36px] md:mb-[40px]">
+      <div className="text-center mb-[20px] md:mb-[24px]">
         <div className="inline-block text-[11px] tracking-[0.18em] uppercase text-amber font-bold mb-[12px]">
           Our Collection
         </div>
@@ -131,6 +147,27 @@ export default function ProductsSection({ products }: { products: Product[] }) {
         <p className="text-[15px] md:text-[16px] text-textMid mt-[16px] md:mt-[18px]">
           Five signature flavours. Choose how you want to enjoy REGGI.
         </p>
+      </div>
+
+      {/* Taste Filter Row */}
+      <div className="flex items-center justify-center mb-[12px] md:mb-[14px]">
+        <div className="flex items-center gap-[8px] justify-center px-[4px]">
+          {tasteFilters.map((taste) => (
+            <button
+              key={taste}
+              type="button"
+              onClick={() => handleTasteToggle(taste)}
+              aria-pressed={activeTaste === taste}
+              className={`whitespace-nowrap px-[18px] md:px-[22px] h-[44px] min-h-[44px] flex items-center justify-center rounded-[100px] text-[14px] font-medium tracking-[0.02em] transition-all duration-200 cursor-pointer border ${
+                activeTaste === taste
+                  ? 'bg-greenDark text-[#F8F4EA] border-greenDark'
+                  : 'bg-transparent text-textDark/80 border-[#DED7C9] hover:border-greenDark/40 hover:text-greenDark'
+              }`}
+            >
+              {taste}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Format Filter Row */}
@@ -155,7 +192,7 @@ export default function ProductsSection({ products }: { products: Product[] }) {
       {/* Product Grid */}
       {sortedProducts.length > 0 ? (
         <div 
-          key={activeFormat}
+          key={`${activeFormat}-${activeTaste || 'all'}`}
           className="grid grid-cols-1 min-[360px]:grid-cols-2 md:grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-x-[12px] gap-y-[24px] md:gap-[28px] animate-fade-in"
         >
           {sortedProducts.map((p) => (
