@@ -4,24 +4,35 @@ import { useState, useEffect } from 'react';
 import { Product } from '@/data/products';
 import ProductCard from './ProductCard';
 
-type FormatFilterType = 'ALL' | 'BOTTLES' | 'POUCHES' | 'COMBOS';
+type FormatFilterType = 'ALL' | 'BOTTLE' | 'POUCH' | 'COMBOS';
 type TasteFilterType = 'Sweet' | 'Spicy' | null;
 
-const formatFilters: FormatFilterType[] = ['ALL', 'BOTTLES', 'POUCHES', 'COMBOS'];
+const formatFilters: FormatFilterType[] = ['ALL', 'BOTTLE', 'POUCH', 'COMBOS'];
 const tasteFilters: Array<'Sweet' | 'Spicy'> = ['Sweet', 'Spicy'];
 
+const categoryPriority: Record<string, number> = {
+  'Single Bottle': 1,
+  'Pouch Pack': 2,
+  'Combo': 3,
+};
+
 const curatedProductOrder = [
-  '5-flavours-jar-combo',
+  // Individual Bottles
   'cumin-ginger-chilli-bottle',
   'cardamom-bottle',
   'ginger-garlic-chilli-bottle',
   'cardamom-cinnamon-clove-bottle',
+  'cardamom-cinnamon-cloves-bottle',
   'cardamom-cinnamon-ginger-bottle',
+
+  // Individual Pouches
   'cumin-ginger-chilli-pouch',
   'ginger-garlic-chilli-pouch',
   'cardamom-pouch',
   'cardamom-cinnamon-cloves-pouch',
   'cardamom-cinnamon-ginger-pouch',
+
+  // Combos
   'cumin-ginger-chilli-combo',
   'ginger-garlic-chilli-combo',
   'cardamom-combo',
@@ -29,6 +40,7 @@ const curatedProductOrder = [
   'cardamom-cinnamon-ginger-combo',
   'spicy-pouch-combo',
   'sweet-pouch-combo',
+  '5-flavours-jar-combo',
 ];
 
 export default function ProductsSection({ products }: { products: Product[] }) {
@@ -70,6 +82,12 @@ export default function ProductsSection({ products }: { products: Product[] }) {
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
+    const catA = categoryPriority[a.category] ?? 99;
+    const catB = categoryPriority[b.category] ?? 99;
+    if (catA !== catB) {
+      return catA - catB;
+    }
+
     const indexA = curatedProductOrder.indexOf(a.id);
     const indexB = curatedProductOrder.indexOf(b.id);
     const posA = indexA === -1 ? 999 : indexA;
