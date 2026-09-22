@@ -67,8 +67,8 @@ export default function ProductsSection({ products }: { products: Product[] }) {
 
   const filteredProducts = products.filter((p) => {
     // 1. Packaging format filter
-    if (activeFormat === 'BOTTLES' && p.category !== 'Single Bottle') return false;
-    if (activeFormat === 'POUCHES' && p.category !== 'Pouch Pack') return false;
+    if (activeFormat === 'BOTTLE' && p.category !== 'Single Bottle') return false;
+    if (activeFormat === 'POUCH' && p.category !== 'Pouch Pack') return false;
     if (activeFormat === 'COMBOS' && p.category !== 'Combo') return false;
 
     // 2. Taste profile filter
