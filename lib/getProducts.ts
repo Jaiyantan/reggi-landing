@@ -63,3 +63,42 @@ export async function getProducts(): Promise<Product[]> {
     };
   });
 }
+
+export async function getProductById(id: string): Promise<Product | null> {
+  const matchId = (pId: string) =>
+    pId === id ||
+    (id === 'cardamom-cinnamon-cloves-bottle' && pId === 'cardamom-cinnamon-clove-bottle') ||
+    (id === 'cardamom-cinnamon-clove-bottle' && pId === 'cardamom-cinnamon-cloves-bottle');
+
+  try {
+    const products = await getProducts();
+    if (products && products.length > 0) {
+      const found = products.find((p) => matchId(p.id));
+      if (found) return found;
+    }
+  } catch (err) {
+    console.error('Error in getProductById:', err);
+  }
+  // Fallback to static products
+  return staticProducts.find((p) => matchId(p.id)) || null;
+}
+
+export async function getAllProductIds(): Promise<string[]> {
+  let ids: string[] = [];
+  try {
+    const products = await getProducts();
+    if (products && products.length > 0) {
+      ids = products.map((p) => p.id);
+    }
+  } catch (err) {
+    console.error('Error in getAllProductIds:', err);
+  }
+  if (ids.length === 0) {
+    ids = staticProducts.map((p) => p.id);
+  }
+  if (ids.includes('cardamom-cinnamon-clove-bottle') && !ids.includes('cardamom-cinnamon-cloves-bottle')) {
+    ids.push('cardamom-cinnamon-cloves-bottle');
+  }
+  return ids;
+}
+

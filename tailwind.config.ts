@@ -26,6 +26,7 @@ const config: Config = {
       },
       fontFamily: {
         cormorant: ["var(--font-cormorant)", "Cormorant Garamond", "serif"],
+        manrope: ["var(--font-manrope)", "Manrope", "sans-serif"],
         dmSans: ["var(--font-dm-sans)", "DM Sans", "sans-serif"],
       },
       boxShadow: {

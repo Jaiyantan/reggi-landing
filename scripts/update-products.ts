@@ -14,27 +14,32 @@ const updates = [
   {
     slug: 'cumin-ginger-chilli-bottle',
     flavour_type: 'Spicy',
-    description: 'Bold, warm & spicy. A fiery Elanthai blend with cumin, ginger and chilli.'
+    description: 'A bold, spicy burst with the warmth of traditional Indian spices.',
+    image_url: '/images/cgc1.png'
   },
   {
     slug: 'ginger-garlic-chilli-bottle',
     flavour_type: 'Spicy',
-    description: 'Aromatic and fiery. The perfect bold kick of ginger, garlic, and chilli.'
+    description: 'A bold, spicy twist to the traditional taste of Elanthai.',
+    image_url: '/images/ggc1.png'
   },
   {
     slug: 'cardamom-bottle',
     flavour_type: 'Sweet',
-    description: 'Elegant and fragrant. A naturally sweet blend where jujube meets cardamom.'
+    description: 'A sweet, aromatic taste of tradition in every spoonful.',
+    image_url: '/images/c1.png'
   },
   {
     slug: 'cardamom-cinnamon-clove-bottle',
     flavour_type: 'Sweet',
-    description: 'Warm and deeply comforting. A spiced, sweet trio of cardamom, cinnamon, and clove.'
+    description: 'A sweet embrace of tradition in every spoonful.',
+    image_url: '/images/ccc1.png'
   },
   {
     slug: 'cardamom-cinnamon-ginger-bottle',
     flavour_type: 'Sweet',
-    description: 'Sweet, spiced, and balanced. Warm cardamom and cinnamon with a gentle ginger zing.'
+    description: 'Indulge in the sweet richness of REGGI’s Cardamom Cinnamon Ginger Flavored Dip – a delightful mix of ELANTHAI fruit and three powerful natural spices.',
+    image_url: '/images/ccg1.png'
   },
 
   // Pouches
@@ -116,6 +121,7 @@ async function run() {
       .update({
         flavour_type: update.flavour_type,
         description: update.description,
+        ...(('image_url' in update && update.image_url) ? { image_url: update.image_url } : {}),
         updated_at: new Date().toISOString()
       })
       .eq('slug', update.slug);

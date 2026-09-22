@@ -35,6 +35,7 @@
   --color-whatsapp: #25D366;
 
   --font-cormorant: var(--font-cormorant), 'Cormorant Garamond', serif;
+  --font-manrope: var(--font-manrope), 'Manrope', sans-serif;
   --font-dmSans: var(--font-dm-sans), 'DM Sans', sans-serif;
 
   --shadow-nav: 0 2px 8px rgba(44,74,46,0.06), 0 8px 24px rgba(44,74,46,0.05);

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Product } from '@/data/products';
 import { useCartStore } from '@/store/cartStore';
 
@@ -41,26 +42,45 @@ export default function ProductCard({ product }: ProductCardProps) {
     return null;
   };
 
+  const getImageScale = (p: Product) => {
+    switch (p.id) {
+      case 'cardamom-bottle':
+        return 'scale-[1.06] group-hover:scale-[1.09]';
+      case 'cardamom-cinnamon-ginger-bottle':
+        return 'scale-[1.24] group-hover:scale-[1.28]';
+      case 'cumin-ginger-chilli-bottle':
+      case 'ginger-garlic-chilli-bottle':
+        return 'scale-[1.18] group-hover:scale-[1.22]';
+      case 'cardamom-cinnamon-clove-bottle':
+        return 'scale-[1.20] group-hover:scale-[1.24]';
+      default:
+        return 'scale-[1.20] group-hover:scale-[1.24]';
+    }
+  };
+
   const tasteLabel = getTasteLabel(product);
 
   return (
     <div 
       id={`product-${product.id}`}
-      className="group bg-white rounded-[16px] md:rounded-[20px] overflow-hidden border border-[rgba(165,55,48,0.28)] hover:border-[rgba(165,55,48,0.42)] flex flex-col shadow-sm transition-colors duration-200 scroll-mt-[100px]"
+      className="group bg-white rounded-[16px] md:rounded-[20px] overflow-hidden border border-[rgba(165,55,48,0.28)] hover:border-[rgba(165,55,48,0.42)] flex flex-col shadow-sm transition-colors duration-200 scroll-mt-[100px] w-full max-w-[360px] sm:max-w-none mx-auto relative"
     >
-      {/* 1. PRODUCT IMAGE */}
-      <div className="relative overflow-hidden bg-[#F8F4EA] aspect-[4/5] max-h-[220px] sm:max-h-[240px] md:max-h-[250px] rounded-t-[16px] md:rounded-t-[20px] border-b border-black/5 flex items-center justify-center">
+      {/* 1. PRODUCT IMAGE LINK */}
+      <Link 
+        href={`/products/${product.id}`}
+        className="block relative w-full h-[240px] sm:h-[260px] md:h-[290px] lg:h-[310px] bg-white rounded-t-[16px] md:rounded-t-[20px] overflow-hidden flex items-center justify-center border-b border-black/5 cursor-pointer"
+      >
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-contain p-[10px] md:p-[14px]"
+          className={`w-full h-full object-contain object-center max-w-full max-h-full transition-transform duration-300 ease-out ${getImageScale(product)}`}
         />
-      </div>
+      </Link>
 
       {/* CARD CONTENT */}
       <div className="p-[14px] md:p-[16px] flex-1 flex flex-col justify-between bg-white">
         
-        <div>
+        <Link href={`/products/${product.id}`} className="block cursor-pointer">
           {/* 2. SMALL TASTE LABEL */}
           {tasteLabel && (
             <div className="mb-[4px]">
@@ -79,7 +99,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
           
           {/* 3. PRODUCT NAME */}
-          <h3 className="font-cormorant text-[18px] md:text-[21px] font-bold text-[#121212] leading-[1.15] mb-[4px]">
+          <h3 className="font-cormorant text-[18px] md:text-[21px] font-bold text-[#121212] leading-[1.15] mb-[4px] group-hover:text-greenDark transition-colors">
             {product.name}
           </h3>
           
@@ -87,13 +107,13 @@ export default function ProductCard({ product }: ProductCardProps) {
           <p className="text-[12px] md:text-[13px] text-textMid leading-[1.4] mb-[12px] line-clamp-2">
             {product.description}
           </p>
-        </div>
+        </Link>
 
         {/* BOTTOM ROW: PRICE & ADD TO CART */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-[10px] pt-[12px] border-t border-black/5 mt-auto">
           
           {/* 5. PRICE */}
-          <div className="flex items-baseline gap-[6px] sm:flex-col sm:gap-0">
+          <Link href={`/products/${product.id}`} className="flex items-baseline gap-[6px] sm:flex-col sm:gap-0 cursor-pointer">
             {product.priceOriginal && (
               <span className="text-[11px] text-textMid/60 line-through mb-[1px]">
                 {product.priceOriginal}
@@ -102,14 +122,18 @@ export default function ProductCard({ product }: ProductCardProps) {
             <span className="text-[17px] md:text-[19px] font-bold text-greenDark leading-none">
               {product.priceCurrent}
             </span>
-          </div>
+          </Link>
 
           {/* 6. ADD TO CART */}
           <button
             type="button"
-            onClick={handleAddToCart}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleAddToCart();
+            }}
             disabled={isAdding}
-            className={`w-full sm:w-auto flex items-center justify-center min-w-[90px] min-h-[42px] sm:min-h-[40px] px-[14px] py-[8px] md:py-[10px] rounded-[100px] text-[12px] md:text-[13px] font-bold cursor-pointer transition-all duration-200 ease-out whitespace-nowrap border ${
+            className={`w-full sm:w-auto flex items-center justify-center min-w-[90px] min-h-[42px] sm:min-h-[40px] px-[14px] py-[8px] md:py-[10px] rounded-[100px] text-[12px] md:text-[13px] font-bold cursor-pointer transition-all duration-200 ease-out whitespace-nowrap border z-10 ${
               hasError 
                 ? 'bg-redAccent border-redAccent text-white'
                 : isAdded
@@ -125,3 +149,4 @@ export default function ProductCard({ product }: ProductCardProps) {
     </div>
   );
 }
+

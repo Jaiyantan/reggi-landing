@@ -193,7 +193,7 @@ export default function ProductsSection({ products }: { products: Product[] }) {
       {sortedProducts.length > 0 ? (
         <div 
           key={`${activeFormat}-${activeTaste || 'all'}`}
-          className="grid grid-cols-1 min-[360px]:grid-cols-2 md:grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-x-[12px] gap-y-[24px] md:gap-[28px] animate-fade-in"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-y-[24px] sm:gap-x-[16px] md:gap-[28px] animate-fade-in"
         >
           {sortedProducts.map((p) => (
             <ProductCard key={p.id} product={p} />

@@ -19,7 +19,7 @@ export default function AnnouncementBar() {
 
       <aside
         aria-label="Announcements"
-        className="fixed top-0 left-0 right-0 z-[110] w-full h-[36px] bg-greenDark text-white overflow-hidden select-none border-b border-white/10"
+        className="fixed top-0 left-0 right-0 z-[110] w-full max-w-[100vw] h-[36px] bg-greenDark text-white overflow-hidden select-none border-b border-white/10"
       >
         <style>{`
           @keyframes marqueeScroll {

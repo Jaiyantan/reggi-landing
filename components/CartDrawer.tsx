@@ -128,21 +128,21 @@ export default function CartDrawer() {
             <div className="flex items-center justify-center -space-x-3 mb-[22px]" aria-hidden="true">
               <div className="w-[50px] h-[50px] rounded-full p-[3px] bg-[#F8F4EA] border border-[#E5DED0] shadow-sm z-10 shrink-0">
                 <img
-                  src="/images/reggi-cumin-ginger-chilli.png"
+                  src="/images/jujubee_cumin_ginger_chilli.png"
                   alt=""
                   className="w-full h-full object-contain rounded-full bg-white"
                 />
               </div>
               <div className="w-[58px] h-[58px] rounded-full p-[3px] bg-[#F8F4EA] border border-[#E5DED0] shadow-sm z-20 shrink-0">
                 <img
-                  src="/images/jujubee-with-cardamom-bottle.png"
+                  src="/images/jujubee_with-cardomom.png"
                   alt=""
                   className="w-full h-full object-contain rounded-full bg-white"
                 />
               </div>
               <div className="w-[50px] h-[50px] rounded-full p-[3px] bg-[#F8F4EA] border border-[#E5DED0] shadow-sm z-10 shrink-0">
                 <img
-                  src="/images/reggi-ginger-garlic-chilli-bottle.png"
+                  src="/images/jujubee_ginger_garlic_chilli.png"
                   alt=""
                   className="w-full h-full object-contain rounded-full bg-white"
                 />
